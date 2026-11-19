@@ -1,18 +1,18 @@
 name: scan
 
 # Finds new approved source videos and scores them for clip-worthy moments.
-# Runs daily at 17:00 IST, before the daily Claude task picks clips at about 19:30 IST.
+# Runs daily at 06:30 IST for every approved campaign, before the morning Claude run (about 07:40 IST).
 on:
   schedule:
-    - cron: "30 11 * * *"
+    - cron: "0 1 * * *"
   push:                      # the daily Claude task can start a scan by pushing scan_requests/<name>.json
     paths:
       - "scan_requests/*.json"
   workflow_dispatch:
     inputs:
       campaign:
-        description: "Campaign key from config/campaigns.yaml"
-        default: "tomo_gta6"
+        description: "Campaign key from config/campaigns.yaml, or all"
+        default: "all"
       video:
         description: "Optional: scan only this YouTube video id or URL"
         default: ""
@@ -40,7 +40,7 @@ jobs:
       - name: Settings from manual run
         if: github.event_name != 'push'
         env:
-          IN_CAMPAIGN: ${{ inputs.campaign || 'tomo_gta6' }}
+          IN_CAMPAIGN: ${{ inputs.campaign || 'all' }}
           IN_VIDEO: ${{ inputs.video || '' }}
           IN_FORCE: ${{ inputs.force && '--force' || '' }}
         run: |
@@ -51,14 +51,14 @@ jobs:
       - name: Read scan request (push trigger)
         if: github.event_name == 'push'
         run: |
-          echo "CAMPAIGN=tomo_gta6" >> "$GITHUB_ENV"
+          echo "CAMPAIGN=all" >> "$GITHUB_ENV"
           f=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'scan_requests/*.json' | tail -1)
           [ -z "$f" ] && exit 0
           echo "Scan request: $f"; cat "$f"
           python - "$f" >> "$GITHUB_ENV" <<'PY'
           import json, re, sys
           r = json.load(open(sys.argv[1]))
-          camp = r.get("campaign", "tomo_gta6")
+          camp = r.get("campaign", "all")
           vid = r.get("video", "")
           assert re.fullmatch(r"[A-Za-z0-9_]+", camp)
           assert re.fullmatch(r"[A-Za-z0-9_\-:/.?=&%]*", vid)

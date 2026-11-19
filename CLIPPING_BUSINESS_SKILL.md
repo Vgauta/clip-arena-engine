@@ -33,9 +33,9 @@ The Claude cloud workspace cannot reach YouTube, Google Drive downloads or Huggi
 ## 4. Campaigns
 
 ### 4.1 Discovery (each run, read-only)
-1. Search the web for new clipping campaigns, gaming first: queries like `Content Rewards gaming clipping campaign`, `Content Rewards GTA 6 campaign`, and Content Rewards' own articles (contentrewards.com/articles/...). Campaign pages need a login, so the articles and the owner are the main sources.
+1. Search the web for new clipping campaigns in **gaming and entertainment**: queries like `Content Rewards gaming clipping campaign`, `Content Rewards streamer clipping campaign`, `Content Rewards podcast clipping campaign`, `clipping campaign pay per 1000 views`, and Content Rewards' own articles (contentrewards.com/articles/...). Campaign pages need a login, so articles, agency pages and the owner are the main sources.
 2. For each campaign record: name, run by, rate per 1K views, min and max payout per clip, budget and amount used, platforms, source content, required captions/hashtags/audio, country limits, application needed, deadline, link, date checked.
-3. Add new ones to the **Campaigns** tab with Verdict `Possible` or `Skip`. Never mark a campaign approved yourself.
+3. Add new ones to the **Campaigns** tab with Verdict `Possible` or `Skip`, their Category (Gaming or Entertainment) and Last checked date. Never mark a campaign approved yourself.
 
 ### 4.2 Evaluation: reject a campaign when
 - the source content is not clearly authorized, or commercial use is unclear
@@ -44,6 +44,7 @@ The Claude cloud workspace cannot reach YouTube, Google Drive downloads or Huggi
 - India-based clippers are excluded
 - it requires paying to join
 - it needs a platform we don't have (we have YouTube Shorts and Instagram Reels; no TikTok)
+- it needs a niche account we can't credibly post from (our pages are gaming clip pages)
 - it needs a binding contract, exclusivity or other legal commitment (ask the owner)
 
 Rank the rest by: rate per 1K, max per clip, remaining budget, fit with our two accounts, how much good source material exists, and how hard the audience rules are for us.
@@ -165,15 +166,28 @@ The repo (`data/`, `state/`) keeps the engine's own history, so new runs can see
 - Keep unfinished work: requests and renders stay in the repo; the next run continues from them.
 - Only contact the owner when they really need to act, plus the daily report.
 
-## 13. The daily run (one scheduled task, about 20:40 IST)
-1. Clone `Vgauta/clip-arena-engine`, read this file and `config/`.
-2. Check connectors: vidIQ accounts can publish, Sheets and Drive reachable.
-3. Campaign check (section 4.1) and quick trend check (section 5).
-4. Check the `scan` workflow ran today (new commits in `data/candidates` or `state/`); note failures.
-5. Pick up to 2 moments (section 7). If none, skip to step 10.
-6. Write and push the render request (8.1); wait for results.
-7. Check each render (8.3).
-8. Add each passing clip to the Clips tab with its release link (the release is the stored copy).
-9. Package and post, or send for review while `auto_publish` is false (section 9). Add Publishing and Submissions rows.
-10. Update views and earnings (section 11).
-11. Send the owner a short report: what was posted (with real URLs), what needs submitting now, views and estimated earnings, errors, and anything the owner must do.
+## 13. Daily runs (owner's instructions of 2026-11-19, until the owner says stop)
+
+Two scheduled tasks. Nothing else is scheduled.
+
+### 13.1 Morning run (about 07:40 IST)
+1. Clone `Vgauta/clip-arena-engine` (attach it with add_repo if needed), read this file and `config/`.
+2. Check connectors: `vidiq_social_account_list` shows both accounts with `canPublish: true`; the tracker sheet opens. Log any problem in Errors.
+3. **Campaign research (section 4.1), every day.** Look for the best open campaigns in **gaming and entertainment** (streamers, YouTubers, podcasts, shows, music/creator campaigns that allow clipping). Use web search, Content Rewards' public articles and campaign lists, ClipLaunch / Clipping Nation / other clipping-agency pages. For each: name, category, run by, rate per 1K, max per clip, budget left, platforms, source content, key rules, India allowed?, link. Add new ones to the **Campaigns** tab (Verdict `Possible` or `Skip`, Category, Last checked) and update existing ones. Rank the top 5 for the report. **Never approve a campaign: the owner decides.**
+4. Check the approved campaigns are still open (budget not used up, not paused). If one is closed, stop clipping it and tell the owner.
+5. Check the `scan` workflow ran at 06:30 IST (commits in `data/candidates/`, `state/`). If a campaign has a new stream not yet scanned, push a `scan_requests/<date>-<campaign>.json` and wait for it (up to 40 minutes).
+6. For **each approved campaign**, pick its best unused moment (section 7), from the newest streams first. Avoid near-identical moments to anything already posted (`data/rendered_index.json`). If nothing is good, skip that campaign today and say why.
+7. Push one render request for all of today's clips (8.1), wait for it, check every render (8.3).
+8. For each passing clip: `vidiq_video_upload` from the release link, then `vidiq_social_post_draft_create` with YouTube (title, description, `privacyStatus: public`, category 20) and Instagram (caption), both with `publishAt` = today at the campaign's time in `publishing.post_times_local`, then `vidiq_social_post_publish` (this schedules it; 0 credits). The owner approved automatic posting for the approved campaigns, so no review step. Read `vidiq_social_post_status`: the YouTube link is known right away (private until its time).
+9. Update the tracker: Clips, Publishing (status "Scheduled"), Submissions (YouTube link, Instagram "link at <time>", deadline = post time + 30 min, status "To submit").
+10. Update views and earnings for the last 30 days (section 11).
+11. Add today's row to **Daily Report** (section 14) and send the owner a short message: campaigns active, today's scheduled clips with times and YouTube links, the top new campaigns found (for the owner to approve or skip), money so far, problems.
+
+### 13.2 Evening check (about 21:12 IST)
+1. `vidiq_social_post_status` for today's posts. When a destination is live, record its real URL in Publishing and Submissions.
+2. Message the owner every live link to submit on Content Rewards, with each deadline (post time + 30 minutes). If a post failed, say so and why; never post again blindly.
+3. Remind the owner about any clip that passed its campaign's payout view count and needs the audience-country screenshot.
+
+## 14. Daily Report tab
+One row per day, added by the morning run and completed by the evening check:
+Date · Approved campaigns (count and names) · New campaigns found · Top new campaign · Clips made · Clips scheduled · Links posted · Links waiting for submission · Views (last 30 days) · Estimated earnings (to date) · Problems · Notes.

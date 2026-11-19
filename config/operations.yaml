@@ -2,13 +2,21 @@
 
 owner_timezone: Asia/Kolkata
 
+daily_schedule:                   # owner's instructions of 2026-11-19, until the owner says stop
+  morning_run_local: "07:40"      # campaign research (gaming + entertainment), clips, scheduling, report
+  evening_check_local: "21:12"    # send the live links to submit, update the sheet
+  scan_workflow_local: "06:30"    # GitHub Actions scan of every approved campaign
+
 publishing:
-  # Phase 1 (now): clips are prepared and sent to the owner for review; nothing is posted.
-  # Phase 2: the owner approves the first clip and the workflow; set auto_publish: true.
-  auto_publish: false
-  max_clips_per_day: 2            # across both accounts; never post just to hit a number
-  post_time_local: "21:30"        # morning in the USA, to help the 40% Tier 1 audience rule
-  youtube_privacy: public         # the owner chooses; only used once auto_publish is true
+  # Owner approved automatic daily posting on 2026-11-19 for the approved campaigns.
+  auto_publish: true
+  clips_per_campaign_per_day: 1   # one clip per approved campaign, posted to both accounts
+  max_clips_per_day: 2            # never post just to hit a number; skip a day if nothing is good
+  post_times_local:               # evening in India = morning in the USA (40% Tier 1 audience rule)
+    tomo_gta6: "21:00"
+    kreekcraft_gta6: "21:10"
+    default: "21:20"
+  youtube_privacy: public         # owner approved public Shorts on 2026-11-19
   accounts:                       # posting goes through the vidIQ connector (free for YouTube and Instagram)
     youtube:
       handle: "@cliparenahq-26"

@@ -376,6 +376,28 @@ def main() -> None:
     ap.add_argument("--video", help="scan this video id or URL instead of discovering")
     ap.add_argument("--force", action="store_true", help="rescan even if already processed")
     a = ap.parse_args()
+    if a.campaign == "all":   # daily run: every approved campaign, one after another
+        from engine.common import load_campaigns
+        import sys
+        failed = []
+        for key, c in load_campaigns().items():
+            if c.get("status") != "approved":
+                continue
+            log(f"=== {key} ===")
+            sys.argv = [sys.argv[0], "--campaign", key] + (["--force"] if a.force else [])
+            try:
+                main()
+            except SystemExit as e:
+                if e.code not in (0, None):
+                    failed.append(key)
+            except Exception as e:
+                log(f"{key} failed: {e}")
+                failed.append(key)
+                if "YOUTUBE_BOT_CHECK" in str(e):
+                    raise
+        if failed:
+            raise SystemExit(f"Scan failed for: {failed}")
+        return
     camp = approved_campaign(a.campaign)
     state = read_json(SOURCES_STATE, {})
     if a.video:
