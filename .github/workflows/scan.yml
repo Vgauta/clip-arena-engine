@@ -64,6 +64,11 @@ jobs:
           assert re.fullmatch(r"[A-Za-z0-9_\-:/.?=&%]*", vid)
           print(f"CAMPAIGN={camp}"); print(f"VIDEO={vid}")
           print("FORCE=--force" if r.get("force") else "FORCE=")
+          drive = r.get("drive_file_id", "")
+          assert re.fullmatch(r"[A-Za-z0-9_\-]*", drive)
+          print(f"DRIVE={drive}")
+          title = re.sub(r"[^A-Za-z0-9 _\-|():,.!?']", "", r.get("title", ""))[:120]
+          print(f"TITLE={title}")
           PY
 
       - uses: actions/setup-python@v5
@@ -94,7 +99,9 @@ jobs:
 
       - name: Scan
         run: |
-          if [ -n "$VIDEO" ]; then
+          if [ -n "$DRIVE" ]; then
+            python -m engine.scan --campaign "$CAMPAIGN" --drive "$DRIVE" --title "$TITLE" $FORCE
+          elif [ -n "$VIDEO" ]; then
             python -m engine.scan --campaign "$CAMPAIGN" --video "$VIDEO" $FORCE
           else
             python -m engine.scan --campaign "$CAMPAIGN" $FORCE

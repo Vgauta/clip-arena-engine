@@ -24,7 +24,8 @@ import shutil
 import time
 from pathlib import Path
 
-from engine.common import DATA, OUT, ROOT as ROOT_DIR, WORK, approved_campaign, ffprobe, log, read_json, run, write_json, ytdlp
+from engine.common import (DATA, OUT, ROOT as ROOT_DIR, WORK, approved_campaign, drive_download, ffprobe, log,
+                           read_json, run, write_json, ytdlp)
 
 W, H = 1080, 1920
 RENDER_INDEX = DATA / "rendered_index.json"
@@ -321,7 +322,15 @@ def main() -> None:
             t0 = time.time()
             wd = WORK / "render" / cid
             wd.mkdir(parents=True, exist_ok=True)
-            src = Path(a.source_file) if a.source_file else download_section(c["video_id"], c["start"], c["end"], wd)
+            if a.source_file:
+                src = Path(a.source_file)
+            elif c.get("drive_file_id"):   # campaign-provided file the owner put in Google Drive
+                full = drive_download(c["drive_file_id"])
+                src = wd / "src.mp4"
+                run(["ffmpeg", "-y", "-v", "error", "-ss", f"{c['start']:.2f}", "-i", str(full), "-t", f"{length:.2f}",
+                     "-c:v", "libx264", "-preset", "ultrafast", "-crf", "16", "-c:a", "aac", "-b:a", "192k", str(src)])
+            else:
+                src = download_section(c["video_id"], c["start"], c["end"], wd)
             info = ffprobe(src)
             dur = float(info["format"]["duration"])
             if a.words_json:
@@ -348,7 +357,8 @@ def main() -> None:
             q["overlay_present"] = bool(box) if overlay else None
             res.update({"status": "rendered" if q["pass"] else "failed_qc", "qc": q, "transcript": text,
                         "files": {k: base + p.name for k, p in (("video", mp4), ("cover", cover), ("srt", srt))},
-                        "source_url": f"https://www.youtube.com/watch?v={c['video_id']}&t={int(c['start'])}s",
+                        "source_url": (f"https://drive.google.com/file/d/{c['drive_file_id']}/view" if c.get("drive_file_id")
+                                       else f"https://www.youtube.com/watch?v={c['video_id']}&t={int(c['start'])}s"),
                         "render_seconds": round(time.time() - t0, 1),
                         "rendered_at": time.strftime("%Y-%m-%d %H:%M:%S")})
             if not a.source_file:

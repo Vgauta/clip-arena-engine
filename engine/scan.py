@@ -24,7 +24,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from engine.common import (DATA, STATE, WORK, approved_campaign, log, read_json, run, write_json, ytdlp)
+from engine.common import (DATA, STATE, WORK, approved_campaign, drive_download, ffprobe, log, read_json, run,
+                           write_json, ytdlp)
 
 HYPE_WORDS = [
     "oh my god", "no way", "what the", "let's go", "lets go", "holy", "bro", "dude", "yo", "wait",
@@ -91,6 +92,38 @@ def video_meta(video: str) -> dict:
         "live_status": j.get("live_status"), "availability": j.get("availability"),
         "view_count": j.get("view_count"), "width": j.get("width"), "height": j.get("height"),
     }
+
+
+def drive_meta(file_id: str, title: str = "") -> dict:
+    path = drive_download(file_id)
+    info = ffprobe(path)
+    v = next((x for x in info["streams"] if x["codec_type"] == "video"), {})
+    return {"id": f"drive_{file_id}", "drive_file_id": file_id, "title": title or path.stem,
+            "url": f"https://drive.google.com/file/d/{file_id}/view", "duration": int(float(info["format"]["duration"])),
+            "width": v.get("width"), "height": v.get("height"), "source_type": "drive", "local_path": str(path)}
+
+
+def whisper_transcript(audio: Path) -> tuple[list[dict], list[dict]]:
+    """Transcribe a whole file (no YouTube captions available). Returns (words, cues) like parse_captions."""
+    import wave
+    import numpy as np
+    from faster_whisper import WhisperModel
+    wav = audio.with_suffix(".16k.wav")
+    run(["ffmpeg", "-y", "-v", "error", "-i", str(audio), "-ac", "1", "-ar", "16000", str(wav)])
+    with wave.open(str(wav), "rb") as wf:
+        samples = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768.0
+    model = WhisperModel(os.environ.get("SCAN_WHISPER_MODEL", "base.en"), device="cpu", compute_type="int8")
+    segs, _ = model.transcribe(samples, language="en", vad_filter=True, condition_on_previous_text=False)
+    words, cues = [], []
+    for sg in segs:
+        text = sg.text.strip()
+        if not text:
+            continue
+        cues.append({"start": sg.start, "end": sg.end, "text": text})
+        toks = text.split()
+        step = (sg.end - sg.start) / max(1, len(toks))
+        words += [{"t": sg.start + i * step, "text": w} for i, w in enumerate(toks)]
+    return words, cues
 
 
 # ---------------------------------------------------------------- signals
@@ -327,9 +360,17 @@ def scan_one(camp_key: str, camp: dict, meta: dict) -> Path:
     wd = WORK / "scan" / vid
     t0 = time.time()
     log(f"Scanning {vid}: {meta.get('title')} ({fmt_ts(meta.get('duration', 0))})")
-    files = fetch_signals(vid, wd)
-    words, cues = parse_captions(files["captions"])
-    chat = parse_chat(files["chat"])
+    if meta.get("source_type") == "drive":
+        wd.mkdir(parents=True, exist_ok=True)
+        audio = wd / "audio.m4a"
+        run(["ffmpeg", "-y", "-v", "error", "-i", meta["local_path"], "-vn", "-ac", "1", "-c:a", "aac", "-b:a", "48k", str(audio)])
+        files = {"audio": audio}
+        words, cues = whisper_transcript(audio)
+        chat = []
+    else:
+        files = fetch_signals(vid, wd)
+        words, cues = parse_captions(files["captions"])
+        chat = parse_chat(files["chat"])
     duration = int(meta.get("duration") or (cues[-1]["end"] if cues else 0))
     rms = audio_rms_per_second(files["audio"], duration) if files["audio"] else []
     score, extra = score_video(duration, words, chat, rms)
@@ -339,12 +380,14 @@ def scan_one(camp_key: str, camp: dict, meta: dict) -> Path:
         d = describe(w, words, chat, extra["series"])
         d["rank"] = rank
         d["candidate_id"] = f"{vid}_{int(d['start'])}"
-        d["timestamp_url"] = f"https://www.youtube.com/watch?v={vid}&t={int(d['start'])}s"
+        d["timestamp_url"] = (f"{meta['url']} (at {fmt_ts(d['start'])})" if meta.get("source_type") == "drive"
+                              else f"https://www.youtube.com/watch?v={vid}&t={int(d['start'])}s")
         d["label"] = f"{fmt_ts(d['start'])}-{fmt_ts(d['end'])}"
         cands.append(d)
     result = {
         "campaign": camp_key, "source": meta, "scanned_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "signals_used": {"captions": bool(words), "chat_replay": extra["have_chat"], "audio": bool(rms),
+        "signals_used": {"captions" if meta.get("source_type") != "drive" else "whisper_transcript": bool(words),
+                         "chat_replay": extra["have_chat"], "audio": bool(rms),
                          "visual_analysis": False},
         "weights": extra["weights"], "candidates": cands,
         "notes": "visual_analysis is false: moments are found from chat, audio and speech; frames are checked at render time.",
@@ -374,6 +417,8 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--campaign", required=True)
     ap.add_argument("--video", help="scan this video id or URL instead of discovering")
+    ap.add_argument("--drive", help="scan this Google Drive file id (shared 'Anyone with the link')")
+    ap.add_argument("--title", default="", help="title for a Drive file")
     ap.add_argument("--force", action="store_true", help="rescan even if already processed")
     a = ap.parse_args()
     if a.campaign == "all":   # daily run: every approved campaign, one after another
@@ -402,6 +447,8 @@ def main() -> None:
     state = read_json(SOURCES_STATE, {})
     if a.video:
         metas = [video_meta(a.video)]
+    elif a.drive:
+        metas = [drive_meta(a.drive, a.title)]
     else:
         metas = discover(camp)
         log(f"Found {len(metas)} matching sources: {[m['id'] for m in metas]}")

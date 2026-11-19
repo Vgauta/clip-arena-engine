@@ -2,20 +2,16 @@
 
 owner_timezone: Asia/Kolkata
 
-daily_schedule:                   # owner's instructions of 2026-11-19, until the owner says stop
-  morning_run_local: "07:40"      # campaign research (gaming + entertainment), clips, scheduling, report
-  evening_check_local: "21:12"    # send the live links to submit, update the sheet
-  scan_workflow_local: "06:30"    # GitHub Actions scan of every approved campaign
+daily_schedule:                   # owner's two-chat workflow of 2026-11-19, until the owner says stop
+  campaign_finder_chat_local: "07:37"   # research only; the owner picks campaigns
+  video_chat_local: "19:12"             # make clips, owner approves, post right away, give submission steps
+  scan_workflow_local: "06:30"          # GitHub Actions scan of every approved campaign's YouTube sources
 
 publishing:
-  # Owner approved automatic daily posting on 2026-11-19 for the approved campaigns.
-  auto_publish: true
-  clips_per_campaign_per_day: 1   # one clip per approved campaign, posted to both accounts
-  max_clips_per_day: 2            # never post just to hit a number; skip a day if nothing is good
-  post_times_local:               # evening in India = morning in the USA (40% Tier 1 audience rule)
-    tomo_gta6: "21:00"
-    kreekcraft_gta6: "21:10"
-    default: "21:20"
+  auto_publish: false             # every clip is approved by the owner in the Video chat before it is posted
+  post_when: right_after_approval # evening in India = morning in the USA (Tier 1 audience rule)
+  space_posts_minutes: 10         # on the same account, if vidIQ warns about pacing
+  clips_per_campaign_per_day: 1
   youtube_privacy: public         # owner approved public Shorts on 2026-11-19
   accounts:                       # posting goes through the vidIQ connector (free for YouTube and Instagram)
     youtube:
@@ -28,6 +24,7 @@ publishing:
 storage:
   google_drive:
     root_folder_id: "1RWer7WntVeWhILb_HWRP-KhzWHP3-1sR"          # Clip Arena HQ
+    source_uploads_parent_id: "1yoC9sBZH3OejOPqiDLif37CEQIf9GPT9" # 01_Source_Uploads (one subfolder per campaign; shared "Anyone with the link")
     source_uploads_folder_id: "1hi3fJkFEG2E-9hXW-o3PbdIuppF_-QxX" # 01_Source_Uploads/GTA_VI
     created_clips_folder_id: "1gRBDE9r97rA9SL_p8-ES731WyEBDlsxr"  # 02_Created_Clips/GTA_VI
     used_sources_folder_id: "1G8H4CGxyfMpeLrbJzxyR1Fz_-ApB8Kni"   # 03_Used_Source_Videos/GTA_VI

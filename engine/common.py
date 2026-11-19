@@ -98,3 +98,19 @@ def run(cmd: list[str]) -> subprocess.CompletedProcess:
 def ffprobe(path: Path) -> dict:
     res = run(["ffprobe", "-v", "error", "-print_format", "json", "-show_format", "-show_streams", str(path)])
     return json.loads(res.stdout)
+
+
+def drive_download(file_id: str) -> Path:
+    """Download a Google Drive file shared as 'Anyone with the link'. Cached per run in WORK/drive."""
+    d = WORK / "drive" / file_id
+    d.mkdir(parents=True, exist_ok=True)
+    have = [p for p in d.iterdir() if p.is_file() and not p.name.endswith(".part")]
+    if have:
+        return have[0]
+    import gdown
+    log(f"Downloading Drive file {file_id} ...")
+    out = gdown.download(id=file_id, output=str(d) + "/", quiet=True)
+    if not out or not Path(out).exists():
+        raise RuntimeError("DRIVE_DOWNLOAD_FAILED: the file must be shared as 'Anyone with the link can view' "
+                           f"(file id {file_id})")
+    return Path(out)
