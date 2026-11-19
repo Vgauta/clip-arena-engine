@@ -125,13 +125,27 @@ Commit and push it; the `render` workflow starts automatically. Poll `git pull` 
 
 ## 9. Packaging, posting and submitting
 
-### 9.1 Text for each clip
-- **YouTube Shorts title** (under 70 characters): what happens, plus `#tomovids #gta6`.
-- **YouTube description**: one line about the moment; the campaign's `caption_required_text`; the source link only if `caption_links_allowed` is true; all `required_hashtags` plus 1–3 from `rotating_hashtags`, varied between posts.
-- **Instagram caption**: 1–2 natural lines; the campaign's `caption_required_text`; the same hashtag and link rules.
-- Example (Tomo): "Tomo's first minutes in GTA 6 did not go to plan. Subscribe to Tomo on YouTube (@Tomovids) #tomovids #gta6 #gaming"
-- Example (KreekCraft): "KreekCraft vs the Vice City police. Watch KreekCraft on YouTube and Twitch! #GTA6 #KreekCraft #GrandTheftAutoVI"
-- No keyword stuffing, no repeated captions, no misleading claims.
+### 9.1 Text for each clip (owner's rule from 2026-11-19: hashtags + keywords on every post)
+Build the text from the clip's own moment, the campaign's packaging (`required_hashtags`, `rotating_hashtags`, `keywords`, `caption_required_text`, `caption_links_allowed`) and today's trends (section 5). Keywords are the words people actually search: game name, creator name, what happens ("police chase", "funny moments", "first reaction"), places and characters.
+
+**YouTube Shorts**
+- **Title** (under 70 characters): the main keyword early + what happens, then 1–2 hashtags (the campaign's main ones). Example: "Tomo's First GTA 6 Mission Goes Wrong #gta6 #tomovids".
+- **Description**, in this order:
+  1. One or two natural sentences about the moment that include 2–3 keywords (e.g. "Tomo's first GTA 6 mission turns into chaos in Vice City. Funny GTA 6 moments from his first stream.").
+  2. The campaign's `caption_required_text` (and the source link only if `caption_links_allowed` is true).
+  3. A short "Keywords:" line with 5–8 search phrases, comma-separated (e.g. "GTA 6 funny moments, GTA 6 gameplay, Tomo GTA 6, Vice City, GTA VI first mission").
+  4. 5–8 hashtags on the last line: every `required_hashtag` first, then the most relevant rotating ones. Never more than 15 (YouTube ignores all hashtags when there are too many).
+- **Tags** field: 8–15 keyword phrases (creator, game, moment, characters, places), 500 characters max in total.
+
+**Instagram Reels**
+- **Maximum 5 hashtags** (Instagram's limit). The campaign's `required_hashtags` always come first and count toward the 5; fill the rest with the most relevant ones.
+- Put the reach into **keywords in the caption text** instead: 2–3 natural sentences that include searchable phrases (Instagram search reads caption words), then the campaign's `caption_required_text`, then the hashtags on the last line.
+- Example (Tomo): "Tomo's first GTA 6 mission turns into total chaos 😂 Funny GTA 6 moments from his first Vice City stream. Subscribe to Tomo on YouTube (@Tomovids) #tomovids #gta6 #gtavi #gta6funny #gaming"
+- Example (KreekCraft, no links allowed): "KreekCraft steals a granny's mobility scooter in GTA 6 😂 Funniest GTA 6 moments from his launch stream in Vice City. Watch KreekCraft on YouTube and Twitch! #GTA6 #KreekCraft #GrandTheftAutoVI #gta6funny #gaming"
+
+**Always**
+- Every keyword and hashtag must match what's actually in the clip. No misleading or unrelated trending tags, no keyword lists inside the Instagram caption, no repeated captions between posts.
+- Vary the optional hashtags and keyword phrases between posts so no two posts look identical.
 
 ### 9.2 Publishing through vidIQ (0 credits)
 1. `vidiq_social_account_list`: both accounts must show `canPublish: true`. If not, log it and ask the owner to reconnect; don't post.

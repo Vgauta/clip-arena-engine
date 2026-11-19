@@ -43,7 +43,9 @@ campaigns:
       caption_required_text: "Subscribe to Tomo on YouTube (@Tomovids)"
       caption_links_allowed: true
       required_hashtags: ["#tomovids", "#gta6"]
-      rotating_hashtags: ["#tomo", "#gtavi", "#gta", "#gaming", "#funnymoments"]
+      rotating_hashtags: ["#tomo", "#gtavi", "#gta6funny", "#gta6gameplay", "#gta", "#gaming", "#funnymoments", "#vicecity"]
+      keywords: ["GTA 6 funny moments", "GTA 6 gameplay", "Tomo GTA 6", "GTA VI", "Vice City", "GTA 6 first reaction",
+                 "GTA 6 clips", "GTA 6 funny", "Grand Theft Auto 6", "Tomovids"]
       caption_must_mention: "@Tomovids"
 
     rules:
@@ -104,7 +106,9 @@ campaigns:
       caption_required_text: "Watch KreekCraft on YouTube and Twitch"
       caption_links_allowed: false        # rule: no links or URLs in the caption
       required_hashtags: ["#GTA6", "#KreekCraft", "#GrandTheftAutoVI"]
-      rotating_hashtags: []
+      rotating_hashtags: ["#gta6funny", "#gaming", "#gta6gameplay", "#vicecity", "#funnymoments"]
+      keywords: ["KreekCraft GTA 6", "GTA 6 funny moments", "GTA 6 gameplay", "GTA VI", "Vice City", "KreekCraft funny",
+                 "GTA 6 launch stream", "Grand Theft Auto 6", "GTA 6 clips"]
       caption_must_mention: "KreekCraft"
 
     rules:
