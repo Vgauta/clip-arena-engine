@@ -168,7 +168,7 @@ The repo (`data/`, `state/`) keeps the engine's own history, so new runs can see
 
 ## 13. How the owner works (from 2026-11-19 until the owner says stop)
 
-There is **one** scheduled task, the Campaign finder. All video work happens in the owner's main chat, when the owner asks.
+There are **two** scheduled tasks: the Campaign finder (13.1, about 07:37 IST) and the nightly monitor update (about 21:52 IST), which refreshes the Daily Campaign Monitor sheet (videos made, uploaded, pending, submitted per campaign) and messages the owner. All video work happens in the owner's main chat, when the owner asks.
 
 ### 13.1 Campaign finder (scheduled, daily about 07:37 IST), research only
 1. Read this file and `config/campaigns.yaml` (clone the repo `Vgauta/clip-arena-engine`).
@@ -186,7 +186,7 @@ The owner shares a campaign they picked: its rules, and its content as **YouTube
 4. **Show the owner each clip** with its hook, YouTube title and Instagram caption. Post nothing until the owner approves.
 5. **After approval, schedule the posts** for the evening in India (morning in the USA, which helps the Tier 1 audience rule): by default 21:00 IST for the first clip, then about 10–30 minutes apart, or at the time the owner asks. Use vidiq_video_upload → vidiq_social_post_draft_create (YouTube public + Instagram, with publishAt) → vidiq_social_post_publish. The YouTube link is known right away.
 6. **Submission reminders (always):** for every scheduled post, create a one-time reminder in the owner's main chat (send_later) 3 minutes after its go-live time, named "Clip Arena · Today only <time> · <campaign> <platform> link". When it fires: confirm the post is live with vidiq_social_post_status, then send one message titled "Submit now: <campaign> <platform> (deadline <time>)" with the campaign name and Content Rewards link, the live link, and the steps: (1) open the campaign on Content Rewards (or the Content Rewards app in the agency's Whop) and make sure it's joined; (2) use the campaign's submit option and paste the link, one submission per post; (3) submit before the deadline (30 minutes after going live where required); (4) the posting account must be connected in Content Rewards. Add what comes after (e.g. audience-country screenshot after the payout view count, audience and engagement rules). Then update Publishing and Submissions. Group posts that go live at the same time into one reminder.
-7. Update the tracker: Clips, Publishing, Submissions, Earnings (views via Windsor.ai, read-only), Errors, and today's Daily Report row. Commit and push the repo.
+7. Update the tracker: Clips, Publishing, Submissions, Earnings (views via Windsor.ai, read-only), Errors, and today's Daily Report row. Also add one row per scheduled post to the **Daily Campaign Monitor** sheet (https://claude.ai/artifact/DUX16KQRRSFfsTrRUPuX9v, Videos tab: date, campaign, clip, platform, status Scheduled, goes public, Submitted unticked, submit by, link); a new campaign also gets a row on its Campaigns tab, above Total, with the same formulas. Commit and push the repo.
 ## 14. Daily Report tab
 One row per day, started by the Campaign finder and completed when clips are made in the owner's chat:
 Date · Approved campaigns (count and names) · New campaigns found · Top new campaign · Clips made · Clips scheduled · Links posted · Links waiting for submission · Views (last 30 days) · Estimated earnings (to date) · Problems · Notes.
