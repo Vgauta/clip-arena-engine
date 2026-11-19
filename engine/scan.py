@@ -61,7 +61,13 @@ def discover(camp: dict) -> list[dict]:
                 found.setdefault(e["id"], {"id": e["id"], "title": title, "tab": tab})
     out = []
     for v in found.values():
-        meta = video_meta(v["id"])
+        try:
+            meta = video_meta(v["id"])
+        except RuntimeError as e:
+            if "YOUTUBE_BOT_CHECK" in str(e):
+                raise
+            log(f"Skip {v['id']} ({v['title'][:50]}): {str(e).splitlines()[-1][:150]}")
+            continue  # upcoming, private or members-only: not usable (yet)
         if meta.get("live_status") in ("is_live", "is_upcoming", "post_live"):
             log(f"Skip {v['id']} ({meta.get('live_status')}): VOD not ready yet")
             continue
