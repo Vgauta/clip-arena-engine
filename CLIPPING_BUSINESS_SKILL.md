@@ -20,7 +20,7 @@ We cut short vertical clips from long creator videos, for paid clipping campaign
 | vidIQ connector | vidIQ | Imports a clip from its public release link and posts it to YouTube and Instagram. Free for these platforms. **Never use vidIQ tools that cost credits** (clip generation, compose, edit, transcripts, search). |
 | Windsor.ai connector | Windsor.ai | Reads post views and audience data. Read-only use. |
 | Tracker sheet | Claude Sheets: see `config/operations.yaml` | Campaigns, Clips, Publishing, Submissions, Earnings, Errors. |
-| Google Drive | `Clip Arena HQ` folder | A copy of every finished clip in `02_Created_Clips`. |
+| GitHub Releases | repo Releases page | The permanent copy of every finished clip (MP4, cover, SRT). Google Drive can't take video uploads from the Claude cloud, so Drive is only for files the owner adds by hand. |
 
 The Claude cloud workspace cannot reach YouTube, Google Drive downloads or Hugging Face. That is why all video work happens on GitHub Actions. The workspace can reach GitHub, including release downloads.
 
@@ -145,7 +145,7 @@ Right after posting, add a row to **Submissions**: post URL, platform, campaign 
 
 ## 10. Tracking (tracker sheet)
 Tabs: **Campaigns**, **Clips**, **Publishing**, **Submissions**, **Earnings**, **Errors**, plus **Posting Options** and **Next Steps** for setup notes. Read before writing, never overwrite the owner's edits, append rows.
-- Clips: clip_id, date, source title, source link with time, start–end, hook, layout, QC result, release link, Drive link, status.
+- Clips: clip_id, date, hook, status, QC result, source link with time, start, end, layout, release link, notes.
 - Publishing: clip_id, platform, account, post URL, title/caption, posted at, status.
 - Earnings: clip_id, platform, views, approved views, estimated reward ($1.50 × views/1000, capped at $150, 0 below 2,333), confirmed reward, payout status.
 - Errors: date, step, what failed, attempts, manual action needed.
@@ -173,7 +173,7 @@ The repo (`data/`, `state/`) keeps the engine's own history, so new runs can see
 5. Pick up to 2 moments (section 7). If none, skip to step 10.
 6. Write and push the render request (8.1); wait for results.
 7. Check each render (8.3).
-8. Copy each passing clip to Google Drive `02_Created_Clips/GTA_VI` (file reference upload) and add it to Clips.
+8. Add each passing clip to the Clips tab with its release link (the release is the stored copy).
 9. Package and post, or send for review while `auto_publish` is false (section 9). Add Publishing and Submissions rows.
 10. Update views and earnings (section 11).
 11. Send the owner a short report: what was posted (with real URLs), what needs submitting now, views and estimated earnings, errors, and anything the owner must do.
