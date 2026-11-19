@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      WHISPER_MODEL: small.en
+      WHISPER_MODEL: medium.en
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4

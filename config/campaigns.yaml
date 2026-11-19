@@ -36,6 +36,7 @@ campaigns:
       creator_name: "Tomo"
       creator_handle: "@Tomovids"
       # On-screen call to action (rule: every clip must mention Tomo and say where to watch more)
+      whisper_prompt: "Tomo plays GTA 6 in Vice City, Leonida. Lucia, Jason, police, wanted level, heist, Los Santos Customs."
       tag_text: "TOMO  |  @Tomovids"     # small on-screen credit while the clip plays
       overlay: null                       # no required logo overlay for this campaign
       cta_lines: ["Subscribe to Tomo on YouTube", "@Tomovids"]
@@ -90,6 +91,7 @@ campaigns:
       language: en
       creator_name: "KreekCraft"
       creator_handle: "@KreekCraft"
+      whisper_prompt: "KreekCraft plays GTA 6 in Vice City, Leonida. Lucia, Jason, police, wanted level, chat."
       tag_text: null                      # the official overlay already credits him
       overlay:                            # REQUIRED: visible from start to finish, never covered
         file: "assets/overlays/kreekcraft.png"

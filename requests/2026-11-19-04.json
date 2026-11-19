@@ -1,0 +1,12 @@
+{
+  "request_id": "2026-11-19-04",
+  "campaign": "tomo_gta6",
+  "replace_previous": true,
+  "note": "Re-render of the first two test clips: hook for clip 2 now matches the footage (a yacht cuts across him), better subtitles.",
+  "clips": [
+    {"clip_id": "tomo_XRo2L3077NI_616_v2", "video_id": "XRo2L3077NI", "start": 616.0, "end": 648.0,
+     "hook": "Tomo's first GTA 6 mission turns into chaos", "layout": "blur"},
+    {"clip_id": "tomo_XRo2L3077NI_2425_v2", "video_id": "XRo2L3077NI", "start": 2425.0, "end": 2458.0,
+     "hook": "A yacht comes out of nowhere at Tomo in GTA 6", "layout": "blur"}
+  ]
+}

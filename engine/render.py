@@ -69,7 +69,7 @@ def download_section(video_id: str, start: float, end: float, wd: Path) -> Path:
 
 
 # ---------------------------------------------------------------- speech
-def transcribe(src: Path, wd: Path) -> tuple[list[dict], str]:
+def transcribe(src: Path, wd: Path, prompt: str = "") -> tuple[list[dict], str]:
     wav = wd / "audio16k.wav"
     run(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-ac", "1", "-ar", "16000", str(wav)])
     from faster_whisper import WhisperModel  # imported here so tests can run without it
@@ -80,7 +80,8 @@ def transcribe(src: Path, wd: Path) -> tuple[list[dict], str]:
     with wave.open(str(wav), "rb") as wf:
         audio = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768.0
     segments, _info = model.transcribe(audio, language="en", word_timestamps=True, vad_filter=True,
-                                       condition_on_previous_text=False)
+                                       condition_on_previous_text=False, beam_size=5,
+                                       initial_prompt=prompt or None)
     words = []
     for seg in segments:
         for w in seg.words or []:
@@ -102,10 +103,32 @@ def ass_text(s: str) -> str:
     return s.replace("\\", "/").replace("{", "(").replace("}", ")").replace("\n", "\\N")
 
 
+PHRASES = [("oh", "my", "god"), ("oh", "my", "gosh"), ("oh", "my"), ("no", "way"), ("let's", "go"), ("what", "the")]
+
+
+def merge_phrases(words: list[dict]) -> list[dict]:
+    """Keep short phrases like 'oh my god' in one subtitle chunk."""
+    out, i = [], 0
+    norm = [re.sub(r"[^a-z']", "", w["text"].lower()) for w in words]
+    while i < len(words):
+        for ph in PHRASES:
+            if tuple(norm[i:i + len(ph)]) == ph:
+                grp = words[i:i + len(ph)]
+                out.append({"start": grp[0]["start"], "end": grp[-1]["end"], "text": " ".join(g["text"] for g in grp),
+                            "n": len(ph)})
+                i += len(ph)
+                break
+        else:
+            out.append({**words[i], "n": 1})
+            i += 1
+    return out
+
+
 def chunk_words(words: list[dict], max_words: int = 3, max_len: float = 1.4) -> list[dict]:
     chunks, cur = [], []
-    for w in words:
-        if cur and (len(cur) >= max_words or w["end"] - cur[0]["start"] > max_len
+    for w in merge_phrases(words):
+        if cur and (sum(x.get("n", 1) for x in cur) + w.get("n", 1) > max_words + 1
+                    or sum(x.get("n", 1) for x in cur) >= max_words or w["end"] - cur[0]["start"] > max_len
                     or re.search(r"[.!?,]$", cur[-1]["text"])):
             chunks.append(cur)
             cur = []
@@ -278,7 +301,7 @@ def main() -> None:
         res = {"clip_id": cid, "video_id": c["video_id"], "start": c["start"], "end": c["end"],
                "hook": c.get("hook", ""), "layout": c.get("layout", "blur")}
         try:
-            if not a.force:
+            if not (a.force or req.get("replace_previous")):
                 if index.get(cid, {}).get("status") == "rendered":
                     raise RuntimeError("DUPLICATE: clip_id already rendered")
                 dup = overlaps(index, c["video_id"], c["start"], c["end"])
@@ -297,7 +320,7 @@ def main() -> None:
                 words = json.loads(Path(a.words_json).read_text())
                 text = " ".join(w["text"] for w in words)
             else:
-                words, text = transcribe(src, wd)
+                words, text = transcribe(src, wd, pk.get("whisper_prompt", ""))
             v = next(s for s in info["streams"] if s["codec_type"] == "video")
             _, fg_bottom = layout_filter(res["layout"], int(v["width"]), int(v["height"]))
             overlay = pk.get("overlay")
