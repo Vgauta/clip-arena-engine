@@ -62,13 +62,16 @@ def cookies_args() -> list[str]:
     return []
 
 
-def ytdlp(args: list[str], retries: int = 3, capture: bool = True) -> subprocess.CompletedProcess:
+def ytdlp(args: list[str], retries: int = 3, capture: bool = True, timeout: int | None = None) -> subprocess.CompletedProcess:
     """Run yt-dlp with retries for temporary failures. Raises RuntimeError on final failure."""
     exe = shutil.which("yt-dlp") or "yt-dlp"
     cmd = [exe, "--retries", "5", "--fragment-retries", "10", *cookies_args(), *args]
     last = None
     for attempt in range(1, retries + 1):
-        res = subprocess.run(cmd, capture_output=capture, text=True)
+        try:
+            res = subprocess.run(cmd, capture_output=capture, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            raise RuntimeError(f"TIMEOUT: yt-dlp took longer than {timeout}s")
         if res.returncode == 0:
             return res
         last = res

@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import statistics
@@ -104,14 +105,16 @@ def fetch_signals(video_id: str, wd: Path) -> dict:
         log(f"No captions: {str(e)[:200]}")
     # live chat replay
     try:
-        ytdlp(["--skip-download", "--write-subs", "--sub-langs", "live_chat", "-o", str(wd / "chat"), url], retries=2)
+        # chat replay of a long stream downloads slowly; cap it and carry on without chat if needed
+        ytdlp(["--skip-download", "--write-subs", "--sub-langs", "live_chat", "-o", str(wd / "chat"), url],
+              retries=1, timeout=int(os.environ.get("CHAT_TIMEOUT_SECONDS", "1200")))
     except RuntimeError as e:
         log(f"No chat replay: {str(e)[:200]}")
     # low bitrate audio only
     ytdlp(["-f", "worstaudio[abr>=30]/worstaudio/bestaudio", "-o", str(wd / "audio.%(ext)s"), url])
     return {
         "captions": next(iter(sorted(wd.glob("cap*.json3"))), None),
-        "chat": next(iter(sorted(wd.glob("chat*.live_chat.json"))), None),
+        "chat": next(iter(sorted(p for p in wd.glob("chat*.live_chat.json*") if p.stat().st_size > 0)), None),
         "audio": next(iter(sorted(p for p in wd.glob("audio.*") if not p.name.endswith(".part"))), None),
     }
 
