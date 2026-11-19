@@ -124,6 +124,14 @@ def merge_phrases(words: list[dict]) -> list[dict]:
     return out
 
 
+SWEARS = re.compile(r"\b(f+u+c+k\w*|s+h+i+t+\w*|b+i+t+c+h\w*|a+s+s+h+o+l+e\w*|d+a+m+n\w*|n+i+g+g+\w*|c+u+n+t\w*|d+i+c+k\w*)", re.I)
+
+
+def clean(text: str) -> str:
+    """Star out swear words in on-screen subtitles (the audio is unchanged)."""
+    return SWEARS.sub(lambda m: m.group(0)[0] + "*" * (len(m.group(0)) - 1), text)
+
+
 def chunk_words(words: list[dict], max_words: int = 3, max_len: float = 1.4) -> list[dict]:
     chunks, cur = [], []
     for w in merge_phrases(words):
@@ -142,7 +150,7 @@ def chunk_words(words: list[dict], max_words: int = 3, max_len: float = 1.4) -> 
         if i + 1 < len(chunks):
             end = min(end, chunks[i + 1][0]["start"])
         end = max(end, start + 0.35)
-        text = " ".join(x["text"] for x in c)
+        text = clean(" ".join(x["text"] for x in c))
         text = re.sub(r"[,.]+$", "", text)
         out.append({"start": start, "end": end, "text": text.upper()})
     return out
