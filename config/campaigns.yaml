@@ -1,0 +1,54 @@
+# Campaigns the engine is allowed to process.
+# Only campaigns with status: approved are ever scanned, rendered or posted.
+# A new campaign is added with status: pending and stays that way until the owner approves it.
+
+campaigns:
+  tomo_gta6:
+    name: "TOMO GTA VI Clipping"
+    status: approved            # approved by the owner on 2026-11-19
+    platform: content_rewards
+    run_by: "Clipping Nation"
+    campaign_url: "https://contentrewards.com/c/campaigns/df6de26f-86ec-4782-b818-1fc8053b99a4"
+    rate_per_1k_views_usd: 1.50
+    min_views_for_payout: 2333
+    max_payout_per_clip_usd: 150
+    budget_usd: 1000
+
+    source:
+      # Rules: "sourced mainly from his GTA VI YouTube livestreams, or his GTA VI videos"
+      channel_url: "https://www.youtube.com/@Tomovids"
+      tabs: ["streams", "videos"]
+      title_patterns: ["gta ?(6|vi)\\b", "grand theft auto ?(6|vi)\\b", "\\bvice city\\b"]
+      published_after: "2026-11-18"    # GTA VI launched 2026-11-19; nothing older is GTA VI gameplay
+      max_sources_per_scan: 3
+
+    clip:
+      min_seconds: 20
+      max_seconds: 45
+      target_seconds: 32
+      candidates_per_source: 6
+      skip_start_seconds: 240      # stream intros / waiting screens
+      skip_end_seconds: 120
+      min_gap_seconds: 90          # candidates from one source must be this far apart
+
+    packaging:
+      language: en
+      creator_name: "Tomo"
+      creator_handle: "@Tomovids"
+      # On-screen call to action (rule: every clip must mention Tomo and say where to watch more)
+      cta_lines: ["Subscribe to Tomo on YouTube", "@Tomovids"]
+      required_hashtags: ["#tomovids", "#gta6"]
+      rotating_hashtags: ["#tomo", "#gtavi", "#gta", "#gaming", "#funnymoments"]
+      caption_must_mention: "@Tomovids"
+
+    rules:
+      platforms_allowed: ["youtube_shorts", "instagram_reels", "tiktok"]
+      english_only: true
+      tier1_audience_min_pct: 40
+      submit_within_minutes_of_posting: 30
+      keep_live_days: 30
+      likes_must_be_visible: true
+      max_near_identical_posts: 5
+      no_ai_generated_content: true     # real footage only: no AI voice, AI images or AI thumbnails
+      no_clickbait: true
+      never_portray_creator_negatively: true

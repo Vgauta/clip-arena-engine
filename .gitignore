@@ -1,0 +1,7 @@
+work/
+out/
+__pycache__/
+*.pyc
+*.tmp
+cookies*.txt
+.env

@@ -1,0 +1,34 @@
+# Settings for the daily Claude task. Not secret: these IDs only work for the owner's signed-in accounts.
+
+owner_timezone: Asia/Kolkata
+
+publishing:
+  # Phase 1 (now): clips are prepared and sent to the owner for review; nothing is posted.
+  # Phase 2: the owner approves the first clip and the workflow; set auto_publish: true.
+  auto_publish: false
+  max_clips_per_day: 2            # across both accounts; never post just to hit a number
+  post_time_local: "21:30"        # morning in the USA, to help the 40% Tier 1 audience rule
+  youtube_privacy: public         # the owner chooses; only used once auto_publish is true
+  accounts:                       # posting goes through the vidIQ connector (free for YouTube and Instagram)
+    youtube:
+      handle: "@cliparenahq-26"
+      vidiq_platform_account_id: "UCceFmao43-lz4Bpd7vDWM-g"
+    instagram:
+      handle: "@minicraft.hq"
+      vidiq_platform_account_id: "40540042505608959"
+
+storage:
+  google_drive:
+    root_folder_id: "1RWer7WntVeWhILb_HWRP-KhzWHP3-1sR"          # Clip Arena HQ
+    source_uploads_folder_id: "1hi3fJkFEG2E-9hXW-o3PbdIuppF_-QxX" # 01_Source_Uploads/GTA_VI
+    created_clips_folder_id: "1gRBDE9r97rA9SL_p8-ES731WyEBDlsxr"  # 02_Created_Clips/GTA_VI
+    used_sources_folder_id: "1G8H4CGxyfMpeLrbJzxyR1Fz_-ApB8Kni"   # 03_Used_Source_Videos/GTA_VI
+  tracker_sheet_url: "https://claude.ai/artifact/7VehWyxv1RXGU29B8FiF5J"   # Claude Sheets artifact
+
+github:
+  repo: "Vgauta/clip-arena-engine"
+  releases_url: "https://github.com/Vgauta/clip-arena-engine/releases"
+
+limits:
+  vidiq_credits_allowed_per_day: 0   # posting and video import are free; never use paid vidIQ tools
+  max_retries_per_failed_step: 2
