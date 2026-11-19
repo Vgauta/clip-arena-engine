@@ -166,34 +166,27 @@ The repo (`data/`, `state/`) keeps the engine's own history, so new runs can see
 - Keep unfinished work: requests and renders stay in the repo; the next run continues from them.
 - Only contact the owner when they really need to act, plus the daily report.
 
-## 13. The two daily chats (owner's workflow, from 2026-11-19 until the owner says stop)
+## 13. How the owner works (from 2026-11-19 until the owner says stop)
 
-The owner works in exactly two chats a day. Each is a scheduled task that opens a fresh chat.
+There is **one** scheduled task, the Campaign finder. All video work happens in the owner's main chat, when the owner asks.
 
-### 13.1 Chat 1: Campaign finder (about 07:37 IST), research only
+### 13.1 Campaign finder (scheduled, daily about 07:37 IST), research only
 1. Read this file and `config/campaigns.yaml` (clone the repo `Vgauta/clip-arena-engine`).
 2. Find the best open clipping campaigns in **gaming and entertainment** (section 4.1): web search, Content Rewards' public articles and lists, clipping-agency pages (Clipping Nation, ClipLaunch, Reach and others).
 3. Check the approved campaigns are still open (budget left, not paused).
 4. Update the **Campaigns** tab (new rows with Verdict `Possible`/`Skip`, Category, Last checked) and add today's row to **Daily Report** (campaigns found, top pick).
 5. Message the owner a short ranked list (top 5): name, category, pay per 1K views, max per clip, budget left, platforms, what content is clipped, key rules, link, and one line on why it's good or risky for our accounts.
-6. Do not make clips, do not approve campaigns, do not post. The owner picks.
+6. Do not make clips, approve campaigns or post. The owner picks.
 
-### 13.2 Chat 2: Video chat (about 19:12 IST): make clips → owner approves → post → submission steps
-The owner brings the campaigns they picked, with rules and content, into this chat. Content comes as either:
-- **YouTube links** (streams or videos the campaign allows), or
-- **files the owner put in Google Drive**, in `Clip Arena HQ/01_Source_Uploads/<campaign name>/`. That folder is shared as "Anyone with the link can view" so GitHub can download the files. Find the files with the Google Drive connector (folder id in `config/operations.yaml`). Use each file's id.
-
-Steps:
-1. Clone the repo. Read this file and the config. Start the chat with a short status: approved campaigns, and anything new in the Drive upload folders.
-2. **New campaign from the owner:** add it to `config/campaigns.yaml` with `status: approved` and its full rules (sources, captions, hashtags, link rules, overlay, CTA). If it needs a logo overlay, save the image the owner attaches (or the Drive file) to `assets/overlays/`. Commit and push.
-3. **Make clips for every approved campaign** (continuing ones like TOMO and KreekCraft need no new input, since their sources are on YouTube):
-   - New source: push `scan_requests/<date>-<name>.json` with `{"campaign": "...", "video": "<YouTube id or link>"}` or `{"campaign": "...", "drive_file_id": "<id>", "title": "..."}`. Wait for the scan (public GitHub API).
-   - Pick the best unused moment per campaign (section 7), push one render request (8.1). Drive clips use `"video_id": "drive_<fileId>", "drive_file_id": "<fileId>"`. Check every render (8.3).
-4. **Show the owner each clip for approval**: send the MP4 (download it from the release link), the hook, the YouTube title and the Instagram caption. Wait for the owner's answer in this chat.
-5. **After approval, post right away** (evening in India is morning in the USA, which helps the Tier 1 audience rule): vidiq_video_upload → vidiq_social_post_draft_create (YouTube public + Instagram, no publishAt) → vidiq_social_post_publish → vidiq_social_post_status until each destination has a real URL. Space posts on the same account about 10 minutes apart if vidIQ warns about pacing, and say so.
-6. **Give the owner the submission steps** for each live post: the link, which campaign to submit it to on Content Rewards (with the campaign link), the deadline (30 minutes after posting, if the campaign has one), and any extra proof the campaign asks for later (e.g. audience-country screenshot after N views).
-7. Update the tracker: Clips, Publishing, Submissions, Earnings (views via Windsor.ai, read-only), Errors, and complete today's Daily Report row. Commit and push the repo.
-8. If the owner doesn't answer, nothing is posted. Rendered clips stay on the Releases page for the next day's chat.
+### 13.2 Making videos (in the owner's main chat, on request)
+The owner shares a campaign they picked: its rules, and its content as **YouTube links** or **files in Google Drive** (`Clip Arena HQ/01_Source_Uploads/<campaign name>/`, shared "Anyone with the link can view"; find file ids with the Google Drive connector).
+1. **New campaign:** add it to `config/campaigns.yaml` with `status: approved` and its full rules (sources, captions, hashtags, link rules, overlay, CTA). Save any required logo overlay to `assets/overlays/`. Commit and push.
+2. **Scan new sources:** push `scan_requests/<date>-<name>.json` with `{"campaign": "...", "video": "<YouTube id or link>"}` or `{"campaign": "...", "drive_file_id": "<id>", "title": "..."}`. Approved campaigns' YouTube channels are also scanned automatically every day at 06:30 IST.
+3. **Make clips:** pick the best unused moments (section 7), push a render request (8.1; Drive clips use `"video_id": "drive_<fileId>", "drive_file_id": "<fileId>"`), and check every render (8.3).
+4. **Show the owner each clip** with its hook, YouTube title and Instagram caption. Post nothing until the owner approves.
+5. **After approval, schedule the posts** for the evening in India (morning in the USA, which helps the Tier 1 audience rule): by default 21:00 IST for the first clip, then about 10–30 minutes apart, or at the time the owner asks. Use vidiq_video_upload → vidiq_social_post_draft_create (YouTube public + Instagram, with publishAt) → vidiq_social_post_publish. The YouTube link is known right away.
+6. **Submission steps:** give the owner, for each post, the link, the campaign to submit it to on Content Rewards (campaign link), when it goes live and the deadline (30 minutes after going live, where the campaign requires it). Set a one-time reminder in the owner's chat (send_later) a few minutes after each go-live time, to send the live Instagram link and confirm the YouTube one.
+7. Update the tracker: Clips, Publishing, Submissions, Earnings (views via Windsor.ai, read-only), Errors, and today's Daily Report row. Commit and push the repo.
 ## 14. Daily Report tab
-One row per day, started by the Campaign finder chat and completed by the Video chat:
+One row per day, started by the Campaign finder and completed when clips are made in the owner's chat:
 Date · Approved campaigns (count and names) · New campaigns found · Top new campaign · Clips made · Clips scheduled · Links posted · Links waiting for submission · Views (last 30 days) · Estimated earnings (to date) · Problems · Notes.

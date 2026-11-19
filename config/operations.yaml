@@ -2,15 +2,15 @@
 
 owner_timezone: Asia/Kolkata
 
-daily_schedule:                   # owner's two-chat workflow of 2026-11-19, until the owner says stop
-  campaign_finder_chat_local: "07:37"   # research only; the owner picks campaigns
-  video_chat_local: "19:12"             # make clips, owner approves, post right away, give submission steps
-  scan_workflow_local: "06:30"          # GitHub Actions scan of every approved campaign's YouTube sources
+daily_schedule:                   # owner's workflow of 2026-11-19, until the owner says stop
+  campaign_finder_local: "07:37"  # the only scheduled task: research only, the owner picks campaigns
+  videos: on_request_in_main_chat # the owner shares campaign details; clips are made, approved, then scheduled
+  scan_workflow_local: "06:30"    # GitHub Actions scan of approved campaigns' YouTube channels
 
 publishing:
-  auto_publish: false             # every clip is approved by the owner in the Video chat before it is posted
-  post_when: right_after_approval # evening in India = morning in the USA (Tier 1 audience rule)
-  space_posts_minutes: 10         # on the same account, if vidIQ warns about pacing
+  auto_publish: false             # every clip is approved by the owner before it is scheduled
+  default_first_post_local: "21:00"   # evening in India = morning in the USA (Tier 1 audience rule)
+  space_posts_minutes: 15         # on the same account
   clips_per_campaign_per_day: 1
   youtube_privacy: public         # owner approved public Shorts on 2026-11-19
   accounts:                       # posting goes through the vidIQ connector (free for YouTube and Instagram)
