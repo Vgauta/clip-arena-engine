@@ -5,6 +5,9 @@ name: scan
 on:
   schedule:
     - cron: "30 11 * * *"
+  push:                      # the daily Claude task can start a scan by pushing scan_requests/<name>.json
+    paths:
+      - "scan_requests/*.json"
   workflow_dispatch:
     inputs:
       campaign:
@@ -35,6 +38,25 @@ jobs:
       FORCE: ${{ inputs.force && '--force' || '' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Read scan request (push trigger)
+        if: github.event_name == 'push'
+        run: |
+          f=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'scan_requests/*.json' | tail -1)
+          [ -z "$f" ] && exit 0
+          echo "Scan request: $f"; cat "$f"
+          python - "$f" >> "$GITHUB_ENV" <<'PY'
+          import json, re, sys
+          r = json.load(open(sys.argv[1]))
+          camp = r.get("campaign", "tomo_gta6")
+          vid = r.get("video", "")
+          assert re.fullmatch(r"[A-Za-z0-9_]+", camp)
+          assert re.fullmatch(r"[A-Za-z0-9_\-:/.?=&%]*", vid)
+          print(f"CAMPAIGN={camp}"); print(f"VIDEO={vid}")
+          print("FORCE=--force" if r.get("force") else "FORCE=")
+          PY
 
       - uses: actions/setup-python@v5
         with:
