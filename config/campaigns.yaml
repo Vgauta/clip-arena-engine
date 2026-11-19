@@ -51,6 +51,9 @@ campaigns:
       english_only: true
       tier1_audience_min_pct: 40
       submit_within_minutes_of_posting: 30
+      # Seen 2026-11-19: after 1 Tomo link was accepted, Content Rewards said "limit reached" for the other 3.
+      # Owner is confirming the exact limit with Clipping Nation support. Until then: plan only 1 TOMO submission per day.
+      max_submissions_per_day: 1
       keep_live_days: 30
       likes_must_be_visible: true
       max_near_identical_posts: 5
