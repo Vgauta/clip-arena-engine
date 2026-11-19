@@ -74,7 +74,12 @@ def transcribe(src: Path, wd: Path) -> tuple[list[dict], str]:
     run(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-ac", "1", "-ar", "16000", str(wav)])
     from faster_whisper import WhisperModel  # imported here so tests can run without it
     model = WhisperModel(os.environ.get("WHISPER_MODEL", "small.en"), device="cpu", compute_type="int8")
-    segments, _info = model.transcribe(str(wav), language="en", word_timestamps=True, vad_filter=True,
+    # pass raw samples, not a path: avoids PyAV version clashes inside faster-whisper
+    import wave
+    import numpy as np
+    with wave.open(str(wav), "rb") as wf:
+        audio = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16).astype(np.float32) / 32768.0
+    segments, _info = model.transcribe(audio, language="en", word_timestamps=True, vad_filter=True,
                                        condition_on_previous_text=False)
     words = []
     for seg in segments:
