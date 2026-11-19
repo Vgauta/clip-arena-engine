@@ -1,0 +1,65 @@
+{
+  "request_id": "2026-11-19-04",
+  "campaign": "tomo_gta6",
+  "results": [
+    {
+      "clip_id": "tomo_XRo2L3077NI_616_v2",
+      "video_id": "XRo2L3077NI",
+      "start": 616.0,
+      "end": 648.0,
+      "hook": "Tomo's first GTA 6 mission turns into chaos",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 32.07,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -17.9,
+        "size_mb": 18.14,
+        "subtitle_words": 40,
+        "overlay_present": null
+      },
+      "transcript": "Oh, no. Oh, my God. Oh, my God. Oh, my God. Oh, my God. Oh, my God. Oh, my God. Am I driving? Oh, no, I'm not driving. Wait, how am I driving? I'm outside the hell of a plane.",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-04/tomo_XRo2L3077NI_616_v2.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-04/tomo_XRo2L3077NI_616_v2.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-04/tomo_XRo2L3077NI_616_v2.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=XRo2L3077NI&t=616s",
+      "render_seconds": 141.6,
+      "rendered_at": "2026-11-19 07:48:09"
+    },
+    {
+      "clip_id": "tomo_XRo2L3077NI_2425_v2",
+      "video_id": "XRo2L3077NI",
+      "start": 2425.0,
+      "end": 2458.0,
+      "hook": "A yacht comes out of nowhere at Tomo in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 33.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -18.9,
+        "size_mb": 24.91,
+        "subtitle_words": 49,
+        "overlay_present": null
+      },
+      "transcript": "Mama she said to me Sorry, I didn't find myself. Oh my god, oh my god. Oh my god. Oh my god. Oh my god. Oh my god Yeah, yeah, they just got mowed by a boat by a yacht, am I going in here I just killed it",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-04/tomo_XRo2L3077NI_2425_v2.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-04/tomo_XRo2L3077NI_2425_v2.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-04/tomo_XRo2L3077NI_2425_v2.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=XRo2L3077NI&t=2425s",
+      "render_seconds": 176.9,
+      "rendered_at": "2026-11-19 07:51:06"
+    }
+  ],
+  "finished_at": "2026-11-19 07:51:06"
+}
