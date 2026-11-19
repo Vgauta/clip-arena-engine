@@ -1,0 +1,9 @@
+{
+  "request_id": "2026-11-19-06",
+  "campaign": "kreekcraft_gta6",
+  "note": "First KreekCraft clip, picked from the transcript of 'GTA 6 LIVE (FULL GAME) GIVEAWAYS | DAY 1' at 6:59:50.",
+  "clips": [
+    {"clip_id": "kreek_dy-oCN2NxfA_25190", "video_id": "dy-oCN2NxfA", "start": 25190.0, "end": 25234.0,
+     "hook": "KreekCraft steals a granny's mobility scooter in GTA 6", "layout": "blur"}
+  ]
+}

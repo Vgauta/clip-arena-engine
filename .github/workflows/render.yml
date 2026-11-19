@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: engine-state
+  group: render-queue
   cancel-in-progress: false
 
 jobs:
