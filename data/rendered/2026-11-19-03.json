@@ -1,0 +1,65 @@
+{
+  "request_id": "2026-11-19-03",
+  "campaign": "tomo_gta6",
+  "results": [
+    {
+      "clip_id": "tomo_XRo2L3077NI_616",
+      "video_id": "XRo2L3077NI",
+      "start": 616.0,
+      "end": 648.0,
+      "hook": "Tomo's first GTA 6 mission goes wrong fast",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 32.07,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -17.9,
+        "size_mb": 18.08,
+        "subtitle_words": 45,
+        "overlay_present": null
+      },
+      "transcript": "Oh no My god, oh my god, oh my god, oh my god Go oh my god. Oh my god a headjail or walk Go am I driving? Oh, no, I'm not driving. Wait, how would I be driving? I'm outside the hell of playing",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-03/tomo_XRo2L3077NI_616.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-03/tomo_XRo2L3077NI_616.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-03/tomo_XRo2L3077NI_616.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=XRo2L3077NI&t=616s",
+      "render_seconds": 96.1,
+      "rendered_at": "2026-11-19 07:34:10"
+    },
+    {
+      "clip_id": "tomo_XRo2L3077NI_2425",
+      "video_id": "XRo2L3077NI",
+      "start": 2425.0,
+      "end": 2458.0,
+      "hook": "Tomo gets run over by a yacht in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 33.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -18.9,
+        "size_mb": 24.94,
+        "subtitle_words": 63,
+        "overlay_present": null
+      },
+      "transcript": "I left Italy, my mama she said to me America is pain lost Wait! My mama I didn't find myself Oh my god oh my god oh my god oh my god oh my god Ahhhh Patinso de Lucia Yeah they just got mowed by a boat By a yacht I got it Am I going in here? I just killed a bird",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-03/tomo_XRo2L3077NI_2425.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-03/tomo_XRo2L3077NI_2425.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-03/tomo_XRo2L3077NI_2425.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=XRo2L3077NI&t=2425s",
+      "render_seconds": 113.4,
+      "rendered_at": "2026-11-19 07:36:03"
+    }
+  ],
+  "finished_at": "2026-11-19 07:36:03"
+}
