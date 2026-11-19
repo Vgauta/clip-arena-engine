@@ -32,18 +32,26 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    env:
-      CAMPAIGN: ${{ inputs.campaign || 'tomo_gta6' }}
-      VIDEO: ${{ inputs.video || '' }}
-      FORCE: ${{ inputs.force && '--force' || '' }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
+      - name: Settings from manual run
+        if: github.event_name != 'push'
+        env:
+          IN_CAMPAIGN: ${{ inputs.campaign || 'tomo_gta6' }}
+          IN_VIDEO: ${{ inputs.video || '' }}
+          IN_FORCE: ${{ inputs.force && '--force' || '' }}
+        run: |
+          echo "CAMPAIGN=$IN_CAMPAIGN" >> "$GITHUB_ENV"
+          echo "VIDEO=$IN_VIDEO" >> "$GITHUB_ENV"
+          echo "FORCE=$IN_FORCE" >> "$GITHUB_ENV"
+
       - name: Read scan request (push trigger)
         if: github.event_name == 'push'
         run: |
+          echo "CAMPAIGN=tomo_gta6" >> "$GITHUB_ENV"
           f=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'scan_requests/*.json' | tail -1)
           [ -z "$f" ] && exit 0
           echo "Scan request: $f"; cat "$f"
