@@ -1,0 +1,36 @@
+{
+  "request_id": "2026-11-19-06",
+  "campaign": "kreekcraft_gta6",
+  "results": [
+    {
+      "clip_id": "kreek_dy-oCN2NxfA_25190",
+      "video_id": "dy-oCN2NxfA",
+      "start": 25190.0,
+      "end": 25234.0,
+      "hook": "KreekCraft steals a granny's mobility scooter in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 44.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -19.5,
+        "size_mb": 25.53,
+        "subtitle_words": 56,
+        "overlay_present": true
+      },
+      "transcript": "oh my god oh my god oh my god oh my god oh my god oh my god oh my god oh my god granny is after me granny is after me y 'all oh shit this is the greatest game of all time bro this is the greatest game of all time this is the",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-06/kreek_dy-oCN2NxfA_25190.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-06/kreek_dy-oCN2NxfA_25190.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-19-06/kreek_dy-oCN2NxfA_25190.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=dy-oCN2NxfA&t=25190s",
+      "render_seconds": 147.1,
+      "rendered_at": "2026-11-19 08:42:08"
+    }
+  ],
+  "finished_at": "2026-11-19 08:42:08"
+}
