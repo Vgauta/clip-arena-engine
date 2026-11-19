@@ -33,17 +33,39 @@ FONT = os.environ.get("CLIP_FONT", "DejaVu Sans")
 
 # ---------------------------------------------------------------- source
 def download_section(video_id: str, start: float, end: float, wd: Path) -> Path:
+    """Download only [start, end] of the video. Tries several YouTube player clients, because
+    YouTube often hides video formats from one client (needs a PO token, or SABR-only streams)."""
     wd.mkdir(parents=True, exist_ok=True)
-    for p in wd.glob("src.*"):
-        p.unlink()
-    ytdlp(["-f", "bv*[height<=1080][vcodec^=avc1]+ba[ext=m4a]/bv*[height<=1080]+ba/b[height<=1080]/b",
-           "--download-sections", f"*{start:.2f}-{end:.2f}", "--force-keyframes-at-cuts",
-           "--merge-output-format", "mp4", "-o", str(wd / "src.%(ext)s"),
-           f"https://www.youtube.com/watch?v={video_id}"])
-    files = [p for p in wd.glob("src.*") if p.suffix in (".mp4", ".mkv", ".webm")]
-    if not files:
-        raise RuntimeError("MISSING_SOURCE: section download produced no file")
-    return files[0]
+    url = f"https://www.youtube.com/watch?v={video_id}"
+    fmt = "bv*[height<=1080][vcodec^=avc1]+ba/bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
+    clients = [None, "tv", "web_safari", "mweb", "tv_simply", "web_embedded"]
+    errors = []
+    for client in clients:
+        for p in wd.glob("src.*"):
+            p.unlink()
+        extra = ["--extractor-args", f"youtube:player_client={client}"] if client else []
+        try:
+            ytdlp([*extra, "-f", fmt, "--download-sections", f"*{start:.2f}-{end:.2f}",
+                   "--force-keyframes-at-cuts", "--merge-output-format", "mp4",
+                   "-o", str(wd / "src.%(ext)s"), url], retries=1)
+        except RuntimeError as e:
+            msg = str(e)
+            if "YOUTUBE_BOT_CHECK" in msg or "SOURCE_UNAVAILABLE" in msg:
+                raise
+            errors.append(f"{client or 'default'}: {msg.strip().splitlines()[-1][:200]}")
+            log(f"Download with client {client or 'default'} failed; trying the next one")
+            continue
+        files = [p for p in wd.glob("src.*") if p.suffix in (".mp4", ".mkv", ".webm")]
+        if files:
+            log(f"Downloaded section with client {client or 'default'}")
+            return files[0]
+    # nothing worked: record which formats YouTube offered, to diagnose
+    try:
+        listing = ytdlp(["-F", url], retries=1).stdout[-3000:]
+    except RuntimeError as e:
+        listing = str(e)[-1500:]
+    log("Formats offered:\n" + listing)
+    raise RuntimeError("NO_VIDEO_FORMAT: " + " | ".join(errors) + "\nFormats offered:\n" + listing[-1200:])
 
 
 # ---------------------------------------------------------------- speech

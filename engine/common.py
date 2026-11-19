@@ -65,7 +65,7 @@ def cookies_args() -> list[str]:
 def ytdlp(args: list[str], retries: int = 3, capture: bool = True) -> subprocess.CompletedProcess:
     """Run yt-dlp with retries for temporary failures. Raises RuntimeError on final failure."""
     exe = shutil.which("yt-dlp") or "yt-dlp"
-    cmd = [exe, "--no-warnings", "--retries", "5", "--fragment-retries", "10", *cookies_args(), *args]
+    cmd = [exe, "--retries", "5", "--fragment-retries", "10", *cookies_args(), *args]
     last = None
     for attempt in range(1, retries + 1):
         res = subprocess.run(cmd, capture_output=capture, text=True)
@@ -78,7 +78,9 @@ def ytdlp(args: list[str], retries: int = 3, capture: bool = True) -> subprocess
                                "Add a cookies file as the YT_COOKIES secret.\n" + err)
         if "Private video" in err or "members-only" in err or "This live event will begin" in err:
             raise RuntimeError("SOURCE_UNAVAILABLE: " + err)
-        log(f"yt-dlp failed (attempt {attempt}/{retries}): {err.strip().splitlines()[-1] if err.strip() else 'no output'}")
+        warn = [l for l in err.splitlines() if "WARNING" in l][-3:]
+        log(f"yt-dlp failed (attempt {attempt}/{retries}): {err.strip().splitlines()[-1] if err.strip() else 'no output'}"
+            + ("\n  " + "\n  ".join(w[:250] for w in warn) if warn else ""))
         time.sleep(5 * attempt)
     raise RuntimeError("YTDLP_FAILED: " + ((last.stderr or "")[-1500:] if last else ""))
 
