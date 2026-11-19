@@ -26,17 +26,21 @@ campaigns:
       min_seconds: 20
       max_seconds: 45
       target_seconds: 32
-      candidates_per_source: 6
+      candidates_per_source: 12
       skip_start_seconds: 240      # stream intros / waiting screens
       skip_end_seconds: 120
-      min_gap_seconds: 90          # candidates from one source must be this far apart
+      min_gap_seconds: 60          # candidates from one source must be this far apart
 
     packaging:
       language: en
       creator_name: "Tomo"
       creator_handle: "@Tomovids"
       # On-screen call to action (rule: every clip must mention Tomo and say where to watch more)
+      tag_text: "TOMO  |  @Tomovids"     # small on-screen credit while the clip plays
+      overlay: null                       # no required logo overlay for this campaign
       cta_lines: ["Subscribe to Tomo on YouTube", "@Tomovids"]
+      caption_required_text: "Subscribe to Tomo on YouTube (@Tomovids)"
+      caption_links_allowed: true
       required_hashtags: ["#tomovids", "#gta6"]
       rotating_hashtags: ["#tomo", "#gtavi", "#gta", "#gaming", "#funnymoments"]
       caption_must_mention: "@Tomovids"
@@ -52,3 +56,60 @@ campaigns:
       no_ai_generated_content: true     # real footage only: no AI voice, AI images or AI thumbnails
       no_clickbait: true
       never_portray_creator_negatively: true
+
+  kreekcraft_gta6:
+    name: "KreekCraft GTA 6 Clipping"
+    status: approved            # owner asked to add it on 2026-11-19
+    platform: content_rewards
+    run_by: "ClipLaunch"
+    campaign_url: "https://contentrewards.com/c/campaigns/2eaa14fb-6927-4136-897e-b096e0d907d6"
+    rate_per_1k_views_usd: 1.00
+    min_views_for_payout: null
+    max_payout_per_clip_usd: 300
+    budget_usd: 6824.60
+
+    source:
+      # Rules: only KreekCraft's official GTA 6 livestreams and stream replays (YouTube or Twitch)
+      channel_url: "https://www.youtube.com/@Kreek"
+      tabs: ["streams"]
+      also_allowed_not_automated: ["https://www.twitch.tv/kreekcraft/videos"]   # Twitch: allowed by rules, not scanned yet
+      title_patterns: ["gta ?(6|vi)\\b", "grand theft auto ?(6|vi)\\b", "\\bvice city\\b"]
+      published_after: "2026-11-18"
+      max_sources_per_scan: 2
+
+    clip:
+      min_seconds: 20
+      max_seconds: 45
+      target_seconds: 30
+      candidates_per_source: 12
+      skip_start_seconds: 240
+      skip_end_seconds: 120
+      min_gap_seconds: 60
+
+    packaging:
+      language: en
+      creator_name: "KreekCraft"
+      creator_handle: "@KreekCraft"
+      tag_text: null                      # the official overlay already credits him
+      overlay:                            # REQUIRED: visible from start to finish, never covered
+        file: "assets/overlays/kreekcraft.png"
+        width_px: 760
+        position: above_gameplay
+      cta_lines: ["Watch KreekCraft on", "YouTube and Twitch"]
+      caption_required_text: "Watch KreekCraft on YouTube and Twitch"
+      caption_links_allowed: false        # rule: no links or URLs in the caption
+      required_hashtags: ["#GTA6", "#KreekCraft", "#GrandTheftAutoVI"]
+      rotating_hashtags: []
+      caption_must_mention: "KreekCraft"
+
+    rules:
+      platforms_allowed: ["youtube_shorts", "instagram_reels", "tiktok"]
+      page_requirement: none
+      tier1_audience_min_pct: 40
+      engagement_rate_min_pct: 0.8
+      keep_live_days: 30
+      likes_must_be_visible: true
+      max_near_identical_posts: 5
+      overlay_required_whole_clip: true
+      no_fabricated_context: true
+      new_accounts_need_warmup: true

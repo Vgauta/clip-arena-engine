@@ -24,7 +24,7 @@ import shutil
 import time
 from pathlib import Path
 
-from engine.common import DATA, OUT, WORK, approved_campaign, ffprobe, log, read_json, run, write_json, ytdlp
+from engine.common import DATA, OUT, ROOT as ROOT_DIR, WORK, approved_campaign, ffprobe, log, read_json, run, write_json, ytdlp
 
 W, H = 1080, 1920
 RENDER_INDEX = DATA / "rendered_index.json"
@@ -98,8 +98,8 @@ def chunk_words(words: list[dict], max_words: int = 3, max_len: float = 1.4) -> 
     return out
 
 
-def build_ass(words: list[dict], duration: float, hook: str, cta_lines: list[str], tag: str,
-              fg_bottom: int) -> str:
+def build_ass(words: list[dict], duration: float, hook: str, cta_lines: list[str], tag: str | None,
+              fg_bottom: int, top_y: int = 330) -> str:
     sub_y = min(H - 260, fg_bottom + 230)
     hook_end = min(3.6, duration * 0.4)
     cta_start = max(hook_end + 1.0, duration - 3.2)
@@ -121,10 +121,10 @@ Style: CTA,{FONT},66,&H0000E6FF,&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     ev = []
-    top_y = 330
     if hook:
         ev.append(f"Dialogue: 2,{ass_time(0)},{ass_time(hook_end)},Hook,,0,0,0,,{{\\pos({W // 2},{top_y})\\fad(0,200)}}{ass_text(hook)}")
-    ev.append(f"Dialogue: 1,{ass_time(hook_end)},{ass_time(cta_start)},Tag,,0,0,0,,{{\\pos({W // 2},{top_y + 120})\\fad(250,150)}}{ass_text(tag)}")
+    if tag:
+        ev.append(f"Dialogue: 1,{ass_time(hook_end)},{ass_time(cta_start)},Tag,,0,0,0,,{{\\pos({W // 2},{top_y + 120})\\fad(250,150)}}{ass_text(tag)}")
     cta = "\\N".join(ass_text(x) for x in cta_lines)
     ev.append(f"Dialogue: 2,{ass_time(cta_start)},{ass_time(duration)},CTA,,0,0,0,,{{\\pos({W // 2},{top_y})\\fad(200,0)}}{cta}")
     for c in chunk_words(words):
@@ -157,18 +157,39 @@ def layout_filter(layout: str, src_w: int, src_h: int) -> tuple[str, int]:
     return fg, (H + fg_h) // 2
 
 
-def render_clip(src: Path, ass: Path, layout: str, out: Path) -> None:
+def overlay_box(overlay: dict | None, fg_bottom: int) -> tuple[int, int, int] | None:
+    """(width, height, y) of the campaign's logo overlay, placed just above the gameplay."""
+    if not overlay:
+        return None
+    from PIL import Image
+    with Image.open(ROOT_DIR / overlay["file"]) as im:
+        w0, h0 = im.size
+    w = int(overlay.get("width_px", 760))
+    h = int(round(w * h0 / w0 / 2) * 2)
+    fg_top = H - fg_bottom
+    return w, h, max(20, fg_top - h - 20)
+
+
+def render_clip(src: Path, ass: Path, layout: str, out: Path, overlay: dict | None = None) -> None:
     info = ffprobe(src)
     v = next(s for s in info["streams"] if s["codec_type"] == "video")
-    fg, _ = layout_filter(layout, int(v["width"]), int(v["height"]))
+    fg, fg_bottom = layout_filter(layout, int(v["width"]), int(v["height"]))
     fontsdir = os.environ.get("CLIP_FONTS_DIR", "/usr/share/fonts")
+    box = overlay_box(overlay, fg_bottom)
     graph = (f"[0:v]split=2[a][b];"
              f"[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},gblur=sigma=28,"
              f"eq=brightness=-0.12:saturation=1.1[bg];"
-             f"[b]{fg}[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2,"
-             f"ass={ass}:fontsdir={fontsdir},format=yuv420p[v]")
+             f"[b]{fg}[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2[base];")
+    inputs = ["-i", str(src)]
+    if box:  # required logo overlay, on screen from the first frame to the last
+        inputs += ["-i", str(ROOT_DIR / overlay["file"])]
+        graph += (f"[1:v]scale={box[0]}:{box[1]}:flags=lanczos,format=rgba[logo];"
+                  f"[base][logo]overlay=(W-w)/2:{box[2]}:eof_action=repeat[base2];[base2]")
+    else:
+        graph += "[base]"
+    graph += f"ass={ass}:fontsdir={fontsdir},format=yuv420p[v]"
     has_audio = any(s["codec_type"] == "audio" for s in info["streams"])
-    cmd = ["ffmpeg", "-y", "-v", "error", "-i", str(src), "-filter_complex", graph, "-map", "[v]"]
+    cmd = ["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", graph, "-map", "[v]"]
     if has_audio:
         cmd += ["-map", "0:a:0", "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-c:a", "aac", "-b:a", "160k", "-ar", "48000"]
     cmd += ["-c:v", "libx264", "-preset", os.environ.get("X264_PRESET", "veryfast"), "-crf", "20",
@@ -252,17 +273,21 @@ def main() -> None:
                 words, text = transcribe(src, wd)
             v = next(s for s in info["streams"] if s["codec_type"] == "video")
             _, fg_bottom = layout_filter(res["layout"], int(v["width"]), int(v["height"]))
-            tag = f"{pk['creator_name'].upper()}  |  {pk['creator_handle']}"
+            overlay = pk.get("overlay")
+            box = overlay_box(overlay, fg_bottom)
+            top_y = min(330, box[2] - 140) if box else 330
             ass = wd / "clip.ass"
-            ass.write_text(build_ass(words, dur, c.get("hook", ""), pk["cta_lines"], tag, fg_bottom), encoding="utf-8")
+            ass.write_text(build_ass(words, dur, c.get("hook", ""), pk["cta_lines"], pk.get("tag_text"),
+                                     fg_bottom, top_y), encoding="utf-8")
             mp4 = OUT / f"{cid}.mp4"
-            render_clip(src, ass, res["layout"], mp4)
+            render_clip(src, ass, res["layout"], mp4, overlay)
             cover = OUT / f"{cid}.jpg"
             run(["ffmpeg", "-y", "-v", "error", "-ss", "1.2", "-i", str(mp4), "-frames:v", "1", "-q:v", "3", str(cover)])
             srt = OUT / f"{cid}.srt"
             write_srt(words, srt)
             q = qc(mp4, cc["min_seconds"], cc["max_seconds"], words)
             base = a.release_base.rstrip("/") + "/" if a.release_base else ""
+            q["overlay_present"] = bool(box) if overlay else None
             res.update({"status": "rendered" if q["pass"] else "failed_qc", "qc": q, "transcript": text,
                         "files": {k: base + p.name for k, p in (("video", mp4), ("cover", cover), ("srt", srt))},
                         "source_url": f"https://www.youtube.com/watch?v={c['video_id']}&t={int(c['start'])}s",

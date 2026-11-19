@@ -174,6 +174,23 @@ def audio_rms_per_second(path: Path, duration: int) -> list[float]:
 
 
 # ---------------------------------------------------------------- scoring
+SPAM = re.compile(r"(how do i clip|can i clip|shout ?out|hello|^hi\b|^hey\b|^yo+\b|first|subscribe|sub to)", re.I)
+
+
+def dedupe_chat(chat: list[dict]) -> list[dict]:
+    """Drop greetings/requests and the same message repeated within 30 seconds (spam)."""
+    last: dict[str, float] = {}
+    out = []
+    for m in sorted(chat, key=lambda x: x["t"]):
+        key = re.sub(r"\W+", "", m["text"].lower())[:40]
+        if not key or SPAM.search(m["text"].strip()):
+            continue
+        if key in last and m["t"] - last[key] < 30:
+            continue
+        last[key] = m["t"]
+        out.append(m)
+    return out
+
 def per_second(events: list[float], n: int) -> list[float]:
     arr = [0.0] * n
     for t in events:
@@ -223,21 +240,25 @@ def score_video(duration: int, words: list[dict], chat: list[dict], rms: list[fl
             kw_times.append(t)
     kw = robust_z(smooth(per_second(kw_times, n), 7))
     aud = robust_z(local_spike(rms)) if rms else [0.0] * n
+    # many speaker changes (">>") in a row usually means a story cutscene, not the streamer reacting
+    turns = robust_z(smooth(per_second([w["t"] for w in words if w["text"].startswith(">>")], n), 21))
+    chat = dedupe_chat(chat)
     have_chat = len(chat) > 50
     if have_chat:
         # chat reacts a few seconds after the moment happens, so move chat signals ~6s earlier
         lag = 6
         rate = robust_z(smooth(per_second([m["t"] - lag for m in chat], n), 7))
         laugh = robust_z(smooth(per_second([m["t"] - lag for m in chat if CHAT_LAUGH.search(m["text"])], n), 7))
-        weights = {"chat": 0.35, "chat_laugh": 0.20, "audio": 0.30, "words": 0.15}
+        weights = {"chat": 0.15, "chat_laugh": 0.30, "audio": 0.35, "words": 0.20, "cutscene": -0.15}
         comb = [weights["chat"] * c + weights["chat_laugh"] * l + weights["audio"] * a + weights["words"] * k
-                for c, l, a, k in zip(rate, laugh, aud, kw)]
+                + weights["cutscene"] * max(0.0, t) for c, l, a, k, t in zip(rate, laugh, aud, kw, turns)]
     else:
         rate = laugh = [0.0] * n
-        weights = {"audio": 0.6, "words": 0.4}
-        comb = [weights["audio"] * a + weights["words"] * k for a, k in zip(aud, kw)]
+        weights = {"audio": 0.55, "words": 0.45, "cutscene": -0.15}
+        comb = [weights["audio"] * a + weights["words"] * k + weights["cutscene"] * max(0.0, t)
+                for a, k, t in zip(aud, kw, turns)]
     return smooth(comb, 9), {"weights": weights, "have_chat": have_chat,
-                              "series": {"chat": rate, "chat_laugh": laugh, "audio": aud, "words": kw}}
+                              "series": {"chat": rate, "chat_laugh": laugh, "audio": aud, "words": kw, "cutscene": turns}}
 
 
 def pick_windows(score: list[float], cues: list[dict], camp_clip: dict, duration: int) -> list[dict]:
@@ -321,6 +342,20 @@ def scan_one(camp_key: str, camp: dict, meta: dict) -> Path:
     }
     path = DATA / "candidates" / camp_key / f"{vid}.json"
     write_json(path, result)
+    if cues:
+        tpath = DATA / "transcripts" / camp_key / f"{vid}.txt"
+        tpath.parent.mkdir(parents=True, exist_ok=True)
+        lines, cur_t, cur = [], None, []
+        for c in cues:
+            if cur_t is None:
+                cur_t = c["start"]
+            cur.append(c["text"].replace("\n", " "))
+            if c["end"] - cur_t >= 10:
+                lines.append(f"[{fmt_ts(cur_t)}] {' '.join(cur)}")
+                cur_t, cur = None, []
+        if cur:
+            lines.append(f"[{fmt_ts(cur_t)}] {' '.join(cur)}")
+        tpath.write_text(f"# {meta.get('title')} ({meta.get('url')})\n" + "\n".join(lines) + "\n", encoding="utf-8")
     shutil.rmtree(wd, ignore_errors=True)
     log(f"Wrote {len(cands)} candidates to {path.relative_to(path.parents[3])} in {time.time() - t0:.0f}s")
     return path

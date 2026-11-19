@@ -61,6 +61,17 @@ A campaign is processed only when it is in `config/campaigns.yaml` with `status:
 - At least 40% of viewers from the USA, UK, Canada or Australia; after 2,333 views the owner sends an audience-country screenshot to the Clipping Nation Discord.
 - Each link must be submitted within 30 minutes of posting. Submission is a manual step by the owner (section 9).
 
+### 4.5 Current approved campaign: KreekCraft GTA 6 Clipping (ClipLaunch)
+- $1 per 1K views, max $300 per clip, $6,824.60 budget. Campaign: https://contentrewards.com/c/campaigns/2eaa14fb-6927-4136-897e-b096e0d907d6
+- Source: only KreekCraft's official GTA 6 livestreams and replays (YouTube @Kreek streams; Twitch is allowed but not scanned automatically yet).
+- **The official logo overlay (`assets/overlays/kreekcraft.png`) must be visible for the whole clip.** render.py adds it automatically; check it in every render.
+- Caption must include "Watch KreekCraft on YouTube and Twitch" and **#GTA6 #KreekCraft #GrandTheftAutoVI**. **No links or URLs in the caption.**
+- Prioritize KreekCraft's reactions and personality. No fake reactions, fabricated context or misleading titles.
+- 40% Tier 1 audience, engagement rate at least 0.8%, likes visible, keep 30 days, max 5 near-identical posts, new accounts need warm-up.
+
+### 4.6 Several campaigns at once
+Each campaign has its own block in `config/campaigns.yaml` (sources, clip lengths, packaging, rules). Always take caption text, hashtags, overlay, CTA and link rules from the clip's own campaign, never from another one. Share the daily limit of 2 clips across all campaigns; prefer the campaign with the better moment that day, and alternate when they're equal.
+
 ## 5. Trend research
 Each run, spend at most a few free web searches on what's happening in gaming: GTA VI news, new features players are reacting to, what clips are getting attention. Use it to prefer moments on topics people are searching for right now (a new car, a mission, a glitch everyone is talking about). Note the evidence and source links in the run report. Never claim a trend without a source. Don't keep choosing the same topic just because it worked yesterday.
 
@@ -71,7 +82,7 @@ Each run, spend at most a few free web searches on what's happening in gaming: G
 - To scan a specific video now: run the `scan` workflow manually with `video` set, or ask the owner to.
 
 ## 7. Picking moments (the daily task's judgement)
-Open the newest `data/candidates/<campaign>/*.json` files that still have unused candidates. For each candidate, read `transcript`, `context_before`, `chat_sample` and `signals_at_peak`, and open `timestamp_url` details if needed.
+Open the newest `data/candidates/<campaign>/*.json` files that still have unused candidates. For each candidate, read `transcript`, `context_before`, `chat_sample` and `signals_at_peak`. The full timestamped transcript is in `data/transcripts/<campaign>/<video_id>.txt`: search it too (reactions like "oh my god", "no way", "what", laughter, screaming, first looks at new places or cars), because the scores miss moments. Lines with many `>>` speaker changes are usually story cutscenes: skip those.
 
 Choose a candidate when:
 - there is one clear funny, chaotic, surprising or first-reaction moment
@@ -98,7 +109,8 @@ Commit and push it; the `render` workflow starts automatically. Poll `git pull` 
 ### 8.2 Editing standard (built into render.py)
 - 1080x1920, 30 fps, H.264 + AAC, loudness -14 LUFS, 20–45 s.
 - `blur` layout: the full gameplay frame across the middle on a blurred copy of itself. Nothing cropped, nothing stretched. Use `zoom` (middle 4:3) only when the action is in the centre and nothing important is at the edges.
-- Hook text at the top for the first ~3.5 s; then a `TOMO | @Tomovids` tag; the last ~3 s show "Subscribe to Tomo on YouTube / @Tomovids".
+- Hook text at the top for the first ~3.5 s; then the campaign's `tag_text` (if any); the last ~3 s show the campaign's `cta_lines`.
+- Campaigns with an `overlay` get that logo above the gameplay for the entire clip (`qc.overlay_present` must be true).
 - Subtitles come only from Whisper on the clip's real audio, 1–3 words at a time, below the gameplay. Never invent dialogue.
 - No music is added. The original audio is kept.
 
@@ -114,8 +126,10 @@ Commit and push it; the `render` workflow starts automatically. Poll `git pull` 
 
 ### 9.1 Text for each clip
 - **YouTube Shorts title** (under 70 characters): what happens, plus `#tomovids #gta6`.
-- **YouTube description**: one line about the moment; "Clip from Tomo's stream. Subscribe to Tomo on YouTube: @Tomovids"; the source link (`source_url`); 3–5 hashtags: always `#tomovids #gta6`, plus 1–3 from the rotating list, varied between posts.
-- **Instagram caption**: 1–2 natural lines; "Subscribe to Tomo on YouTube (@Tomovids) for the full stream"; the same hashtag rule.
+- **YouTube description**: one line about the moment; the campaign's `caption_required_text`; the source link only if `caption_links_allowed` is true; all `required_hashtags` plus 1–3 from `rotating_hashtags`, varied between posts.
+- **Instagram caption**: 1–2 natural lines; the campaign's `caption_required_text`; the same hashtag and link rules.
+- Example (Tomo): "Tomo's first minutes in GTA 6 did not go to plan. Subscribe to Tomo on YouTube (@Tomovids) #tomovids #gta6 #gaming"
+- Example (KreekCraft): "KreekCraft vs the Vice City police. Watch KreekCraft on YouTube and Twitch! #GTA6 #KreekCraft #GrandTheftAutoVI"
 - No keyword stuffing, no repeated captions, no misleading claims.
 
 ### 9.2 Publishing through vidIQ (0 credits)

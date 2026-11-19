@@ -1,6 +1,6 @@
 # clip-arena-engine
 
-Free, cloud-run clipping pipeline for approved clipping campaigns. GitHub Actions finds moments and renders vertical clips; a daily Claude task picks moments, checks the renders and posts them through vidIQ.
+Free, cloud-run clipping pipeline for approved clipping campaigns (currently TOMO GTA VI and KreekCraft GTA 6). GitHub Actions finds moments and renders vertical clips; a daily Claude task picks moments, checks the renders and posts them through vidIQ.
 
 - **How it works and how to run it:** [CLIPPING_BUSINESS_SKILL.md](CLIPPING_BUSINESS_SKILL.md)
 - **Campaigns and their rules:** [config/campaigns.yaml](config/campaigns.yaml)
