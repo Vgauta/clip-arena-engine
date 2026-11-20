@@ -1,0 +1,12 @@
+{
+  "request_id": "2026-11-20-03",
+  "campaign": "kreekcraft_gta6",
+  "replace_previous": true,
+  "note": "KreekCraft fixes: car flip trimmed to start on the action; plane clip replaced (explosion not visible on screen) with the gun-store drive at 4:29:20.",
+  "clips": [
+    {"clip_id": "kreek_dy-oCN2NxfA_31121", "video_id": "dy-oCN2NxfA", "start": 31121.0, "end": 31155.5,
+     "hook": "KreekCraft flips his truck in GTA 6", "layout": "blur"},
+    {"clip_id": "kreek_dy-oCN2NxfA_16160", "video_id": "dy-oCN2NxfA", "start": 16160.0, "end": 16205.0,
+     "hook": "KreekCraft tries to find the gun store in GTA 6", "layout": "blur"}
+  ]
+}
