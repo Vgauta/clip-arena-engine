@@ -1,0 +1,65 @@
+{
+  "request_id": "2026-11-20-03",
+  "campaign": "kreekcraft_gta6",
+  "results": [
+    {
+      "clip_id": "kreek_dy-oCN2NxfA_31121",
+      "video_id": "dy-oCN2NxfA",
+      "start": 31121.0,
+      "end": 31155.5,
+      "hook": "KreekCraft flips his truck in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 34.6,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -18.2,
+        "size_mb": 33.83,
+        "subtitle_words": 36,
+        "overlay_present": true
+      },
+      "transcript": "oh shoot oh shoot oh shoot oh shoot oh shoot oh shoot this is not the right car for this y 'all oh shoot oh shoot is my car totaled how do I get it back",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-03/kreek_dy-oCN2NxfA_31121.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-03/kreek_dy-oCN2NxfA_31121.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-03/kreek_dy-oCN2NxfA_31121.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=dy-oCN2NxfA&t=31121s",
+      "render_seconds": 111.7,
+      "rendered_at": "2026-11-20 04:29:07"
+    },
+    {
+      "clip_id": "kreek_dy-oCN2NxfA_16160",
+      "video_id": "dy-oCN2NxfA",
+      "start": 16160.0,
+      "end": 16205.0,
+      "hook": "KreekCraft tries to find the gun store in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 45.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -17.9,
+        "size_mb": 27.37,
+        "subtitle_words": 29,
+        "overlay_present": true
+      },
+      "transcript": "I'm gonna be honest. I don't oh shoot. I don't really like the yellow the yellow paint. This is not the gun store. Oh Shit. Oh my god shit",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-03/kreek_dy-oCN2NxfA_16160.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-03/kreek_dy-oCN2NxfA_16160.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-03/kreek_dy-oCN2NxfA_16160.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=dy-oCN2NxfA&t=16160s",
+      "render_seconds": 130.4,
+      "rendered_at": "2026-11-20 04:31:17"
+    }
+  ],
+  "finished_at": "2026-11-20 04:31:17"
+}
