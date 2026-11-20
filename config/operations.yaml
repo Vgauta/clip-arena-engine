@@ -3,15 +3,15 @@
 owner_timezone: Asia/Kolkata
 
 daily_schedule:                   # owner's workflow of 2026-11-19, until the owner says stop
-  campaign_finder_local: "07:37"  # the only scheduled task: research only, the owner picks campaigns
-  videos: on_request_in_main_chat # the owner shares campaign details; clips are made, approved, then scheduled
-  scan_workflow_local: "06:30"    # GitHub Actions scan of approved campaigns' YouTube channels
+  campaign_finder_local: "19:22"  # owner's rule from 2026-11-20: evening research; the owner picks campaigns
+  videos: evening_in_main_chat    # clips are made and approved in the evening, then scheduled for the next morning
+  scan_workflow_local: "18:47"    # GitHub Actions scan of approved campaigns' channels, just before the evening session
 
 publishing:
   auto_publish: false             # every clip is approved by the owner before it is scheduled
-  posting_window_local: ["18:00", "21:00"]   # owner's rule from 2026-11-20: every post goes live between 6 and 9 PM IST
-  default_first_post_local: "18:00"   # evening in India = morning in the USA (Tier 1 audience rule)
-  space_posts_minutes: 15         # on the same account
+  posting_window_local: ["07:00", "09:00"]   # owner's rule from 2026-11-20 (from 21 Nov): posts go live 7-9 AM IST = 8:30-10:30 PM US Eastern (US prime time)
+  default_first_post_local: "07:00"   # the morning AFTER the clips are made and approved
+  space_posts_minutes: 40         # on the same account; vidIQ flagged 15 min on Instagram as too close
   clips_per_campaign_per_day: 1
   youtube_privacy: public         # owner approved public Shorts on 2026-11-19
   accounts:                       # posting goes through the vidIQ connector (free for YouTube and Instagram)

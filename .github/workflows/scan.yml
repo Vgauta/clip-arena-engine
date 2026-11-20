@@ -4,7 +4,7 @@ name: scan
 # Runs daily at 06:30 IST for every approved campaign, before the morning Claude run (about 07:40 IST).
 on:
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "17 13 * * *"   # 18:47 IST, before the evening clip session
   push:                      # the daily Claude task can start a scan by pushing scan_requests/<name>.json
     paths:
       - "scan_requests/*.json"
