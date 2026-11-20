@@ -1,0 +1,38 @@
+{
+  "request_id": "2026-11-20-01",
+  "campaign": "tomo_gta6",
+  "results": [
+    {
+      "clip_id": "tomo_uDwiE9saR0c_2589",
+      "video_id": "uDwiE9saR0c",
+      "start": 2589.0,
+      "end": 2633.0,
+      "hook": "A stranger lands in Tomo's trunk in GTA 6",
+      "layout": "blur",
+      "status": "failed_qc",
+      "qc": {
+        "pass": false,
+        "problems": [
+          "duration 1.8s outside 20-45s"
+        ],
+        "duration": 1.8,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -19.1,
+        "size_mb": 1.33,
+        "subtitle_words": 52,
+        "overlay_present": null
+      },
+      "transcript": "Oh, he landed in my trunk. Are you good? I'll take you to the hospital. Stop moving around. Can you get out of my trunk, please? That might be criminal evidence. Just have a body in the back of my car now. Oh, his body's just switching out. Shall I pull over?",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-01/tomo_uDwiE9saR0c_2589.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-01/tomo_uDwiE9saR0c_2589.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-01/tomo_uDwiE9saR0c_2589.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=uDwiE9saR0c&t=2589s",
+      "render_seconds": 303.7,
+      "rendered_at": "2026-11-20 04:17:07"
+    }
+  ],
+  "finished_at": "2026-11-20 04:17:07"
+}
