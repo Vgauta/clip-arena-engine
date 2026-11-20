@@ -5,7 +5,7 @@
 campaigns:
   tomo_gta6:
     name: "TOMO GTA VI Clipping"
-    status: approved            # approved by the owner on 2026-11-19
+    status: ended               # owner: campaign over on 2026-11-20 (18:08 IST); no more clips, scans or submissions
     platform: content_rewards
     run_by: "Clipping Nation"
     campaign_url: "https://contentrewards.com/c/campaigns/df6de26f-86ec-4782-b818-1fc8053b99a4"
