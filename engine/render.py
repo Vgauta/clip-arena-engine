@@ -33,6 +33,33 @@ FONT = os.environ.get("CLIP_FONT", "DejaVu Sans")
 
 
 # ---------------------------------------------------------------- source
+def section_video_seconds(path: Path) -> float:
+    """Length of the shortest audio/video stream (a section download can come back with a
+    full audio track but a video track of only a second or two)."""
+    try:
+        info = ffprobe(path)
+    except Exception:
+        return 0.0
+    durs = []
+    for st in info.get("streams", []):
+        if st.get("codec_type") in ("video", "audio"):
+            try:
+                durs.append(float(st.get("duration") or 0))
+            except ValueError:
+                pass
+    if not durs or max(durs) == 0:
+        # mkv/webm keep durations in tags; fall back to counting decoded video frames
+        try:
+            out = run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_packets",
+                       "-show_entries", "stream=nb_read_packets,r_frame_rate", "-of", "json", str(path)]).stdout
+            st = json.loads(out)["streams"][0]
+            num, den = (st["r_frame_rate"].split("/") + ["1"])[:2]
+            return int(st["nb_read_packets"]) / (float(num) / float(den))
+        except Exception:
+            return float(info.get("format", {}).get("duration") or 0)
+    return min(d for d in durs if d > 0) if any(durs) else 0.0
+
+
 def download_section(video_id: str, start: float, end: float, wd: Path) -> Path:
     """Download only [start, end] of the video. Tries several YouTube player clients, because
     YouTube often hides video formats from one client (needs a PO token, or SABR-only streams)."""
@@ -40,6 +67,8 @@ def download_section(video_id: str, start: float, end: float, wd: Path) -> Path:
     url = f"https://www.youtube.com/watch?v={video_id}"
     fmt = "bv*[height<=1080][vcodec^=avc1]+ba/bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
     clients = [None, "tv", "web_safari", "mweb", "tv_simply", "web_embedded"]
+    # The default format pick can land on a stream whose video segments stop early; the
+    # other clients usually offer a different (complete) stream for the same section.
     errors = []
     for client in clients:
         for p in wd.glob("src.*"):
@@ -58,7 +87,13 @@ def download_section(video_id: str, start: float, end: float, wd: Path) -> Path:
             continue
         files = [p for p in wd.glob("src.*") if p.suffix in (".mp4", ".mkv", ".webm")]
         if files:
-            log(f"Downloaded section with client {client or 'default'}")
+            got = section_video_seconds(files[0])
+            want = end - start
+            if got < 0.8 * want:
+                errors.append(f"{client or 'default'}: video track only {got:.1f}s of {want:.1f}s")
+                log(f"Client {client or 'default'} gave a short video track ({got:.1f}s of {want:.1f}s); trying the next one")
+                continue
+            log(f"Downloaded section with client {client or 'default'} ({got:.1f}s)")
             return files[0]
     # nothing worked: record which formats YouTube offered, to diagnose
     try:

@@ -81,23 +81,24 @@ jobs:
         env:
           FORCE: ${{ inputs.force && '--force' || '' }}
         run: |
-          while read -r req; do
+          # read the list on fd 3 so tools inside the loop can't swallow it from stdin
+          while read -r req <&3; do
             [ -z "$req" ] && continue
             id=$(python -c "import json,sys;print(json.load(open(sys.argv[1]))['request_id'])" "$req")
             tag="clips-$id"
             base="https://github.com/${GITHUB_REPOSITORY}/releases/download/$tag"
             rm -rf out && mkdir out
-            python -m engine.render "$req" --release-base "$base" $FORCE
+            python -m engine.render "$req" --release-base "$base" $FORCE < /dev/null
             if ls out/*.mp4 >/dev/null 2>&1; then
               gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --prerelease \
-                --title "Clips $id" --notes "Rendered from $req. Source: Tomo's YouTube (@Tomovids), clipped for the approved campaign."
+                --title "Clips $id" --notes "Rendered from $req. Clipped from the creator's own YouTube upload for an approved campaign."
               gh release upload "$tag" out/* --clobber
               for f in out/*.mp4; do
                 code=$(curl -s -o /dev/null -w "%{http_code}" -L "$base/$(basename "$f")")
                 echo "Public link check $(basename "$f"): $code"
               done
             fi
-          done < todo.txt
+          done 3< todo.txt
 
       - name: Save results
         if: always()
