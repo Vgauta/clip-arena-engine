@@ -1,0 +1,36 @@
+{
+  "request_id": "2026-11-20-05",
+  "campaign": "kreekcraft_gta6",
+  "results": [
+    {
+      "clip_id": "kreek_QwJ3cLNEqCE_6211",
+      "video_id": "QwJ3cLNEqCE",
+      "start": 6211.0,
+      "end": 6242.0,
+      "hook": "KreekCraft hits a bird while flying in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 31.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -20.0,
+        "size_mb": 15.74,
+        "subtitle_words": 43,
+        "overlay_present": true
+      },
+      "transcript": "O shoot O shoot O shoot O shoot O shoot O shoot O shoot! Oh my God, I almost crashed. O my God, I hit the bird. O my God, I hit the bird. Land. Land Land Land Land Land Land Land Check",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-05/kreek_QwJ3cLNEqCE_6211.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-05/kreek_QwJ3cLNEqCE_6211.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-05/kreek_QwJ3cLNEqCE_6211.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=QwJ3cLNEqCE&t=6211s",
+      "render_seconds": 136.0,
+      "rendered_at": "2026-11-20 04:58:46"
+    }
+  ],
+  "finished_at": "2026-11-20 04:58:46"
+}
