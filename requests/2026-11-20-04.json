@@ -1,0 +1,11 @@
+{
+  "request_id": "2026-11-20-04",
+  "campaign": "kreekcraft_gta6",
+  "note": "Options for today's 2nd KreekCraft clip, from 'DAY 1 (PART 2)': dog-poop moment at 5:30:03 and near-crash at 1:43:25.",
+  "clips": [
+    {"clip_id": "kreek_QwJ3cLNEqCE_19803", "video_id": "QwJ3cLNEqCE", "start": 19803.0, "end": 19848.0,
+     "hook": "KreekCraft throws dog poop at people in GTA 6", "layout": "blur"},
+    {"clip_id": "kreek_QwJ3cLNEqCE_6203", "video_id": "QwJ3cLNEqCE", "start": 6203.0, "end": 6242.0,
+     "hook": "KreekCraft almost crashes in GTA 6", "layout": "blur"}
+  ]
+}
