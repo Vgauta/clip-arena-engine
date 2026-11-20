@@ -1,0 +1,9 @@
+{
+  "request_id": "2026-11-20-01",
+  "campaign": "tomo_gta6",
+  "note": "Today's Tomo clip, from '🔴 PLAYING GTA 6 (DAY 2)' at 0:43:09.",
+  "clips": [
+    {"clip_id": "tomo_uDwiE9saR0c_2589", "video_id": "uDwiE9saR0c", "start": 2589.0, "end": 2633.0,
+     "hook": "A stranger lands in Tomo's trunk in GTA 6", "layout": "blur"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "request_id": "2026-11-20-02",
+  "campaign": "kreekcraft_gta6",
+  "note": "Today's two KreekCraft clips, from 'GTA 6 LIVE (FULL GAME) GIVEAWAYS | DAY 1' at 5:52:40 and 8:38:32.",
+  "clips": [
+    {"clip_id": "kreek_dy-oCN2NxfA_21160", "video_id": "dy-oCN2NxfA", "start": 21160.0, "end": 21204.0,
+     "hook": "A plane explodes right in front of KreekCraft", "layout": "blur"},
+    {"clip_id": "kreek_dy-oCN2NxfA_31112", "video_id": "dy-oCN2NxfA", "start": 31112.0, "end": 31156.0,
+     "hook": "KreekCraft picks the wrong car in GTA 6", "layout": "blur"}
+  ]
+}
