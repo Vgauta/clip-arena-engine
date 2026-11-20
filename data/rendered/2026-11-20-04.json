@@ -1,0 +1,65 @@
+{
+  "request_id": "2026-11-20-04",
+  "campaign": "kreekcraft_gta6",
+  "results": [
+    {
+      "clip_id": "kreek_QwJ3cLNEqCE_19803",
+      "video_id": "QwJ3cLNEqCE",
+      "start": 19803.0,
+      "end": 19848.0,
+      "hook": "KreekCraft throws dog poop at people in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 45.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -20.7,
+        "size_mb": 36.6,
+        "subtitle_words": 41,
+        "overlay_present": true
+      },
+      "transcript": "Please subscribe, like, comment, and share. Ladies and gentlemen, I am throwing poop at somebody Who am I throw? Who am I throwing it at? Who am I throwing it at? Oh shoot. This is the greatest game of all time",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-04/kreek_QwJ3cLNEqCE_19803.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-04/kreek_QwJ3cLNEqCE_19803.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-04/kreek_QwJ3cLNEqCE_19803.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=QwJ3cLNEqCE&t=19803s",
+      "render_seconds": 127.6,
+      "rendered_at": "2026-11-20 04:51:55"
+    },
+    {
+      "clip_id": "kreek_QwJ3cLNEqCE_6203",
+      "video_id": "QwJ3cLNEqCE",
+      "start": 6203.0,
+      "end": 6242.0,
+      "hook": "KreekCraft almost crashes in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 39.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -20.1,
+        "size_mb": 19.85,
+        "subtitle_words": 26,
+        "overlay_present": true
+      },
+      "transcript": "Check this out. Oh my God, I hit the bird. Oh my God, I hit the bird. Land. Land, land, land, land, land, land, land. Check.",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-04/kreek_QwJ3cLNEqCE_6203.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-04/kreek_QwJ3cLNEqCE_6203.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-04/kreek_QwJ3cLNEqCE_6203.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=QwJ3cLNEqCE&t=6203s",
+      "render_seconds": 108.7,
+      "rendered_at": "2026-11-20 04:53:44"
+    }
+  ],
+  "finished_at": "2026-11-20 04:53:44"
+}
