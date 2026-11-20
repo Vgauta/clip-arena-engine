@@ -38,7 +38,21 @@
     "video_id": "uDwiE9saR0c",
     "start": 2589.0,
     "end": 2633.0,
-    "status": "failed_qc",
+    "status": "rendered",
     "request_id": "2026-11-20-01"
+  },
+  "kreek_dy-oCN2NxfA_21160": {
+    "video_id": "dy-oCN2NxfA",
+    "start": 21160.0,
+    "end": 21204.0,
+    "status": "rendered",
+    "request_id": "2026-11-20-02"
+  },
+  "kreek_dy-oCN2NxfA_31112": {
+    "video_id": "dy-oCN2NxfA",
+    "start": 31112.0,
+    "end": 31156.0,
+    "status": "rendered",
+    "request_id": "2026-11-20-02"
   }
 }

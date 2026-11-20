@@ -1,0 +1,65 @@
+{
+  "request_id": "2026-11-20-02",
+  "campaign": "kreekcraft_gta6",
+  "results": [
+    {
+      "clip_id": "kreek_dy-oCN2NxfA_21160",
+      "video_id": "dy-oCN2NxfA",
+      "start": 21160.0,
+      "end": 21204.0,
+      "hook": "A plane explodes right in front of KreekCraft",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 44.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -18.8,
+        "size_mb": 23.5,
+        "subtitle_words": 39,
+        "overlay_present": true
+      },
+      "transcript": "Let's go explore. What the heck was that? Chat, what if this is the mission where we get Lucia, though? Ain't no way, bro. Just... Chat, I think we're about to go crack cow. Bro, that plane just exploded.",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-02/kreek_dy-oCN2NxfA_21160.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-02/kreek_dy-oCN2NxfA_21160.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-02/kreek_dy-oCN2NxfA_21160.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=dy-oCN2NxfA&t=21160s",
+      "render_seconds": 99.3,
+      "rendered_at": "2026-11-20 04:22:50"
+    },
+    {
+      "clip_id": "kreek_dy-oCN2NxfA_31112",
+      "video_id": "dy-oCN2NxfA",
+      "start": 31112.0,
+      "end": 31156.0,
+      "hook": "KreekCraft picks the wrong car in GTA 6",
+      "layout": "blur",
+      "status": "rendered",
+      "qc": {
+        "pass": true,
+        "problems": [],
+        "duration": 44.1,
+        "width": 1080,
+        "height": 1920,
+        "mean_volume_db": -18.6,
+        "size_mb": 43.08,
+        "subtitle_words": 51,
+        "overlay_present": true
+      },
+      "transcript": "She's doing a giveaway for GTA 6 in 25 minutes. Another giveaway. Oh shoot. Oh shoot. Oh shoot. Oh shoot. Oh shoot. Oh shoot. This is not the right car for this, y 'all. Oh shoot. OH SHOOT! Is my car totaled? How do I get it back? Thanks for watching!",
+      "files": {
+        "video": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-02/kreek_dy-oCN2NxfA_31112.mp4",
+        "cover": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-02/kreek_dy-oCN2NxfA_31112.jpg",
+        "srt": "https://github.com/Vgauta/clip-arena-engine/releases/download/clips-2026-11-20-02/kreek_dy-oCN2NxfA_31112.srt"
+      },
+      "source_url": "https://www.youtube.com/watch?v=dy-oCN2NxfA&t=31112s",
+      "render_seconds": 106.8,
+      "rendered_at": "2026-11-20 04:24:37"
+    }
+  ],
+  "finished_at": "2026-11-20 04:24:37"
+}
