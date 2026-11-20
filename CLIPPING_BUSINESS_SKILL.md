@@ -125,26 +125,29 @@ Commit and push it; the `render` workflow starts automatically. Poll `git pull` 
 
 ## 9. Packaging, posting and submitting
 
-### 9.1 Text for each clip (owner's rule from 2026-11-19: hashtags + keywords on every post)
-Build the text from the clip's own moment, the campaign's packaging (`required_hashtags`, `rotating_hashtags`, `keywords`, `caption_required_text`, `caption_links_allowed`) and today's trends (section 5). Keywords are the words people actually search: game name, creator name, what happens ("police chase", "funny moments", "first reaction"), places and characters.
+### 9.1 Text for each clip (owner's rule, updated 2026-11-20)
+Build the text from the clip's own moment, the campaign's packaging (`required_hashtags`, `rotating_hashtags`, `keywords`, `caption_required_text`, `caption_links_allowed`) and today's trends (section 5). Keywords are the words people actually search: game name, creator name, what happens ("police chase", "funny moments", "car flip"), places and characters.
 
-**YouTube Shorts**
-- **Title** (under 70 characters): the main keyword early + what happens, then 1–2 hashtags (the campaign's main ones). Example: "Tomo's First GTA 6 Mission Goes Wrong #gta6 #tomovids".
-- **Description**, in this order:
-  1. One or two natural sentences about the moment that include 2–3 keywords (e.g. "Tomo's first GTA 6 mission turns into chaos in Vice City. Funny GTA 6 moments from his first stream.").
-  2. The campaign's `caption_required_text` (and the source link only if `caption_links_allowed` is true).
-  3. A short "Keywords:" line with 5–8 search phrases, comma-separated (e.g. "GTA 6 funny moments, GTA 6 gameplay, Tomo GTA 6, Vice City, GTA VI first mission").
-  4. 5–8 hashtags on the last line: every `required_hashtag` first, then the most relevant rotating ones. Never more than 15 (YouTube ignores all hashtags when there are too many).
-- **Tags** field: 8–15 keyword phrases (creator, game, moment, characters, places), 500 characters max in total.
+**Owner's fixed format for BOTH the Instagram caption and the YouTube description — always in this order:**
+1. **Description:** 1–2 natural sentences about the moment, then the campaign's `caption_required_text` (source link only if `caption_links_allowed` is true).
+2. **Hashtags** on their own line. Instagram: maximum 5, `required_hashtags` first. YouTube: 5–8 (never more than 15).
+3. **Keywords in square brackets** on the last line: `[GTA 6 funny moments, GTA 6 gameplay, Tomo GTA 6, ...]`, 5–8 search phrases.
 
-**Instagram Reels**
-- **Maximum 5 hashtags** (Instagram's limit). The campaign's `required_hashtags` always come first and count toward the 5; fill the rest with the most relevant ones.
-- Put the reach into **keywords in the caption text** instead: 2–3 natural sentences that include searchable phrases (Instagram search reads caption words), then the campaign's `caption_required_text`, then the hashtags on the last line.
-- Example (Tomo): "Tomo's first GTA 6 mission turns into total chaos 😂 Funny GTA 6 moments from his first Vice City stream. Subscribe to Tomo on YouTube (@Tomovids) #tomovids #gta6 #gtavi #gta6funny #gaming"
-- Example (KreekCraft, no links allowed): "KreekCraft steals a granny's mobility scooter in GTA 6 😂 Funniest GTA 6 moments from his launch stream in Vice City. Watch KreekCraft on YouTube and Twitch! #GTA6 #KreekCraft #GrandTheftAutoVI #gta6funny #gaming"
+Example (Instagram, Tomo):
+```
+A stranger landed in Tomo's truck and started spazzing out 😭
+Subscribe to Tomo on YouTube (@Tomovids)
+
+#tomovids #gta6 #gtavi #gaming #funnymoments
+
+[GTA 6 funny moments, GTA 6 gameplay, Tomo GTA 6, GTA VI NPC, GTA 6 day 2]
+```
+YouTube also gets: a **title** under 70 characters (main keyword early + what happens) and a **Tags** field with 8–15 keyword phrases.
+
+**Which link to submit:** for Tomo (1 submission/day) the owner submits the **Instagram** link (bigger audience). Other campaigns: submit both unless a limit says otherwise.
 
 **Always**
-- Every keyword and hashtag must match what's actually in the clip. No misleading or unrelated trending tags, no keyword lists inside the Instagram caption, no repeated captions between posts.
+- Every keyword and hashtag must match what's actually in the clip. No misleading or unrelated trending tags, no repeated captions between posts.
 - Vary the optional hashtags and keyword phrases between posts so no two posts look identical.
 
 ### 9.2 Publishing through vidIQ (0 credits)
