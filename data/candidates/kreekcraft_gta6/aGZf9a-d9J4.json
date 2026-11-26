@@ -1,0 +1,285 @@
+{
+  "campaign": "kreekcraft_gta6",
+  "source": {
+    "id": "aGZf9a-d9J4",
+    "title": "GTA 6 JUPITER INCIDENT..",
+    "tab": "streams",
+    "url": "https://www.youtube.com/watch?v=aGZf9a-d9J4",
+    "channel": "Kreek",
+    "channel_url": "https://www.youtube.com/channel/UCv0xclBIBkDTPoGhwEF2AZA",
+    "duration": 1507,
+    "upload_date": "20261126",
+    "live_status": "was_live",
+    "availability": "public",
+    "view_count": 96947,
+    "width": 2560,
+    "height": 1440
+  },
+  "scanned_at": "2026-11-26T22:19:54+00:00",
+  "signals_used": {
+    "captions": true,
+    "chat_replay": false,
+    "audio": true,
+    "visual_analysis": false
+  },
+  "weights": {
+    "audio": 0.55,
+    "words": 0.45,
+    "cutscene": -0.15
+  },
+  "candidates": [
+    {
+      "peak": 376,
+      "start": 356.4,
+      "end": 386.5,
+      "score": 2.504,
+      "transcript": "Okay. >> What the It's an alien egg. >> What >> the hell? Not loving that. >> Oh. Oh, I got to avoid it. I got to sneak through. Screw it. WE RUNNING. RUN, LUCIA. RUN.",
+      "context_before": "Jupiter. We going to Jupiter. What the heck? Keys. Keys. Keys.",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 0.67,
+        "words": 6.0,
+        "cutscene": 1.0
+      },
+      "rank": 1,
+      "candidate_id": "aGZf9a-d9J4_356",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=356s",
+      "label": "0:05:56-0:06:26"
+    },
+    {
+      "peak": 1221,
+      "start": 1201.52,
+      "end": 1230.16,
+      "score": 2.382,
+      "transcript": "Okay. >> Well, he's banned. Oh my god. >> HEY, YOU'RE NOT PERMITTED TO BE HERE. >> WHAT? >> BRO, you had to do that in the middle of the freaking cutscene. Wait, they're helping me. They're helping me. >> [screaming]",
+      "context_before": ">> Oh, shoot. >> What the? [music] >> He's alive. >> Hey. [music]",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 0.84,
+        "words": 6.0,
+        "cutscene": 4.02
+      },
+      "rank": 2,
+      "candidate_id": "aGZf9a-d9J4_1201",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=1201s",
+      "label": "0:20:01-0:20:30"
+    },
+    {
+      "peak": 743,
+      "start": 721.76,
+      "end": 752.28,
+      "score": 1.994,
+      "transcript": "Whoa. Place it in the machine in the right room. What's up, Ernest? Thank you. in the right room. Is this a puzzle for you to find your dad? Real funny, buddy. Thank you very much. I appreciate that.",
+      "context_before": "room and grab the milk. Hey yo.",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": -0.29,
+        "words": 4.59,
+        "cutscene": 0.0
+      },
+      "rank": 3,
+      "candidate_id": "aGZf9a-d9J4_721",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=721s",
+      "label": "0:12:01-0:12:32"
+    },
+    {
+      "peak": 1101,
+      "start": 1081.12,
+      "end": 1114.4,
+      "score": 1.793,
+      "transcript": ">> Okay. Oh, what the There. No, no [ __ ] way. Are you alive? What the [ __ ] are you? >> Pick him up. >> Okay, I think I uh got to get you out of here. >> Containment",
+      "context_before": ">> [music] >> Y'all think there's an alien behind this door? Insert milk.",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 0.29,
+        "words": 4.59,
+        "cutscene": 2.01
+      },
+      "rank": 4,
+      "candidate_id": "aGZf9a-d9J4_1081",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=1081s",
+      "label": "0:18:01-0:18:34"
+    },
+    {
+      "peak": 295,
+      "start": 276.48,
+      "end": 305.04,
+      "score": 1.626,
+      "transcript": "We're going to get abducted again. Sleep until morning. Okay, [music] come on. Alien nightmare. This is it. So, you go to sleep a few times and then you get an alien nightmare. Here we go. Ah, [screaming] [clears throat] big old goobies. Big",
+      "context_before": "is we go to sleep and they're going to abduct me again while I'm sleeping. So, let's call an Uber and let's go back home and we're going to go to sleep. Apparently, it happens within the next 3 days.",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 0.54,
+        "words": 4.59,
+        "cutscene": 0.0
+      },
+      "rank": 5,
+      "candidate_id": "aGZf9a-d9J4_276",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=276s",
+      "label": "0:04:36-0:05:05"
+    },
+    {
+      "peak": 1281,
+      "start": 1262.24,
+      "end": 1291.92,
+      "score": 1.551,
+      "transcript": "That was freaking sick. So, does anybody want to do a giveaway now? It's actually a giveaway sponsored by KitKat. Y'all know KitKat, right? We're going to be giving out a $100 PSN PlayStation gift card. So, let me explain how this is going to work because it's kind of it's kind of funny. So, we're going to react to their they got like a one minute video we're going to watch and then after that I'm going to randomly pick someone from the chat. Okay,",
+      "context_before": ">> Thanks. Yo, that was freaking sick.",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 1.06,
+        "words": 2.3,
+        "cutscene": 0.0
+      },
+      "rank": 6,
+      "candidate_id": "aGZf9a-d9J4_1262",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=1262s",
+      "label": "0:21:02-0:21:31"
+    },
+    {
+      "peak": 494,
+      "start": 475.36,
+      "end": 502.96,
+      "score": 1.1,
+      "transcript": "give up. Never back down. I think we got to go left. Let's go this way. Ain't no way I already almost lost. Oh, the the",
+      "context_before": "Did I go the wrong way? I went the wrong way. >> I went the wrong way. I think we got to go left. I think we got to go left. Never give up. Never back down. Never",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": -0.84,
+        "words": 4.59,
+        "cutscene": 0.0
+      },
+      "rank": 7,
+      "candidate_id": "aGZf9a-d9J4_475",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=475s",
+      "label": "0:07:55-0:08:22"
+    },
+    {
+      "peak": 912,
+      "start": 895.28,
+      "end": 922.5,
+      "score": 0.787,
+      "transcript": "a keypad. Y'all remember the the number from before? I think it was 4 2 1 3.",
+      "context_before": "Oh, shoot. I'm guessing we go to the basement, huh? There's",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 1.17,
+        "words": 0.0,
+        "cutscene": 0.0
+      },
+      "rank": 8,
+      "candidate_id": "aGZf9a-d9J4_895",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=895s",
+      "label": "0:14:55-0:15:22"
+    },
+    {
+      "peak": 825,
+      "start": 805.6,
+      "end": 837.68,
+      "score": 0.565,
+      "transcript": ">> Okay, cuz luckily I do. >> Save me a coffee, will you? >> Yep. >> Yeah, this is definitely it. This is definitely it right here. Oh, yeah. This is it. All right. So, this is where it is on the map right here. Okay. This is definitely it, chat. I feel like we're breaking into like some Stranger Things facility. Oh, I think we're going to have to drive through. We're",
+      "context_before": "pylon thing next to it kind of in the middle of nowhere. >> That could be a lot of places. Why? >> It was in the dream. Look, if you ever see somewhere like that, just just let me know. >> All right, I'm going back to sleep. >> Ch, y'all know where that is? >> No, I'm up.",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 1.79,
+        "words": 0.0,
+        "cutscene": 0.0
+      },
+      "rank": 9,
+      "candidate_id": "aGZf9a-d9J4_805",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=805s",
+      "label": "0:13:25-0:13:57"
+    },
+    {
+      "peak": 1369,
+      "start": 1349.28,
+      "end": 1380.15,
+      "score": 0.544,
+      "transcript": ">> W. Not the Kit Kat Wars. [music] Okay. Amazing. [music]",
+      "context_before": ">> [music] [screaming]",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 0.66,
+        "words": 0.0,
+        "cutscene": 0.0
+      },
+      "rank": 10,
+      "candidate_id": "aGZf9a-d9J4_1349",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=1349s",
+      "label": "0:22:29-0:23:00"
+    },
+    {
+      "peak": 584,
+      "start": 564.5,
+      "end": 593.64,
+      "score": 0.475,
+      "transcript": ">> [music] >> What is this? What is that? [music] Chat, remember where this is.",
+      "context_before": "It's Earth. Is that freaking Jupiter?",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": -0.06,
+        "words": 2.3,
+        "cutscene": 2.01
+      },
+      "rank": 11,
+      "candidate_id": "aGZf9a-d9J4_564",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=564s",
+      "label": "0:09:24-0:09:53"
+    },
+    {
+      "peak": 1032,
+      "start": 1012.88,
+      "end": 1040.64,
+      "score": 0.24,
+      "transcript": "state. Electrical interferences continue to persist. Unsure if it is related to the subject's nutritional intake. We'll continue to monitor. Thus far, isotope containment unaffected. Tomorrow we begin exposure tests. Cesium 137 a promising candidate. Correct. I expect a strong reaction. are offline. Power at 73%. Containment",
+      "context_before": "My form seems to have a particular taste for milk. Unpasteurized, non-homogenized, raw cow's milk. It seems to act like some kind of drug-like substance. This would also explain the historical incidence of cattle abductions in the",
+      "chat_sample": [],
+      "chat_messages": 0,
+      "signals_at_peak": {
+        "chat": 0.0,
+        "chat_laugh": 0.0,
+        "audio": 0.69,
+        "words": 0.0,
+        "cutscene": 0.0
+      },
+      "rank": 12,
+      "candidate_id": "aGZf9a-d9J4_1012",
+      "timestamp_url": "https://www.youtube.com/watch?v=aGZf9a-d9J4&t=1012s",
+      "label": "0:16:52-0:17:20"
+    }
+  ],
+  "notes": "visual_analysis is false: moments are found from chat, audio and speech; frames are checked at render time."
+}
