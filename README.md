@@ -22,3 +22,11 @@ python -m engine.render requests/<file>.json
 ```
 
 Clips use footage only from sources the campaign authorizes. Credit goes to the original creator in every clip and caption.
+
+## Project scope and development
+
+This is an early-stage Python tool for identifying candidate moments and rendering clips from authorized video sources. The current implementation is tailored to the configured campaigns; general-purpose reuse and independent adoption have not yet been established.
+
+The scanner combines caption, audio and chat signals. The renderer uses FFmpeg and Whisper to produce vertical clips with timed subtitles. GitHub Actions orchestrates the current workflows.
+
+For local prerequisites, issue reporting, reproducibility and responsible media handling, see [CONTRIBUTING.md](CONTRIBUTING.md). A public repository is not automatically open-source licensed; licensing and third-party asset rights must be clarified before redistribution.
